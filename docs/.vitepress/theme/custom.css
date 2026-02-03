@@ -29,6 +29,10 @@
   /* 字体 - 系统字体保证可读性 */
   --vp-font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
   --vp-font-family-mono: 'SF Mono', 'Consolas', 'Liberation Mono', Menlo, Courier, monospace;
+  
+  /* 整体布局最大宽度 - 防止4K屏幕下布局过宽 */
+  --vp-layout-max-width: 1440px;
+  --vp-sidebar-width: 272px;
 }
 
 /* 暗色模式 */
@@ -39,24 +43,49 @@
   --vp-c-bg-alt: #6272a4;
 }
 
-/* 内容最大宽度限制 - 适配所有分辨率 */
-.VPDoc.has-aside .content-container {
-  max-width: 1400px !important;
+/* ========== 整体布局结构 ========== */
+
+/* 整体布局容器 - 限制最大宽度并居中 */
+.Layout {
+  max-width: var(--vp-layout-max-width);
+  margin: 0 auto;
 }
 
-.VPDoc:not(.has-aside) .content {
-  max-width: 960px !important;
+/* 导航栏布局 - 限制宽度并居中 */
+.VPNav {
+  max-width: var(--vp-layout-max-width);
+  margin: 0 auto;
 }
 
-/* 侧边栏宽度 - 增加到足够容纳长标题 */
+.VPNavBar .container {
+  max-width: var(--vp-layout-max-width);
+  margin: 0 auto;
+}
+
+/* 内容区域布局 */
+.VPContent {
+  max-width: var(--vp-layout-max-width);
+  margin: 0 auto;
+}
+
+/* 侧边栏宽度 */
 .VPSidebar {
-  width: 380px !important;
-  max-width: 380px !important;
+  width: var(--vp-sidebar-width) !important;
+  max-width: var(--vp-sidebar-width) !important;
 }
 
 /* 右侧目录宽度 */
 .VPDocAside {
-  width: 240px !important;
+  width: 224px !important;
+}
+
+/* 内容区域最大宽度 */
+.VPDoc.has-aside .content-container {
+  max-width: calc(var(--vp-layout-max-width) - var(--vp-sidebar-width) - 224px) !important;
+}
+
+.VPDoc:not(.has-aside) .content {
+  max-width: 800px !important;
 }
 
 /* Logo 样式 */
@@ -409,46 +438,17 @@
   margin: 2rem 0;
 }
 
-/* 4K 分辨率优化 */
+/* 4K 分辨率优化 - 扩大整体布局 */
 @media (min-width: 2560px) {
-  /* 不修改全局font-size,保持默认16px */
-  
-  /* 仅放大正文内容区域的文字 */
-  .vp-doc h1 {
-    font-size: 2.5rem;
+  :root {
+    /* 4K下扩大整体布局宽度 */
+    --vp-layout-max-width: 2200px;
+    --vp-sidebar-width: 320px;
   }
   
-  .vp-doc h2 {
-    font-size: 2rem;
-  }
-  
-  .vp-doc h3 {
-    font-size: 1.5rem;
-  }
-  
-  .vp-doc p,
-  .vp-doc li {
-    font-size: 1.125rem;
-    line-height: 1.8;
-  }
-  
-  .vp-doc code {
-    font-size: 1rem;
-  }
-  
-  .VPDoc.has-aside .content-container {
-    max-width: 1800px !important;
-  }
-  
-  /* 4K 下右侧目录也适当增宽 */
+  /* 右侧目录适当增宽 */
   .VPDocAside {
-    width: 300px !important;
-  }
-  
-  /* 4K 下侧边栏更宽 - 从480px增加到520px */
-  .VPSidebar {
-    width: 520px !important;
-    max-width: 520px !important;
+    width: 280px !important;
   }
   
   /* 4K 下侧边栏项目保持14px字体 */
