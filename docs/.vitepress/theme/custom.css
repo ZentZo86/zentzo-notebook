@@ -89,8 +89,28 @@
 .VPSidebar {
   background: var(--vp-c-bg-soft) !important;
   border-right: 1px solid var(--vp-c-divider);
-  padding-left: 16px !important;  /* 减少左内边距从32px到16px */
-  padding-right: 16px !important;  /* 减少右内边距从32px到16px */
+  padding: 24px 24px 48px 24px !important;  /* 优化内边距 */
+}
+
+/* 侧边栏项目样式优化 */
+.VPSidebarItem {
+  margin-bottom: 4px !important;  /* 项目之间的间距 */
+}
+
+/* 侧边栏链接样式 */
+.VPSidebarItem .link {
+  padding: 8px 12px !important;  /* 增加点击区域 */
+  border-radius: 6px !important;  /* 圆角 */
+  transition: all 0.2s ease !important;
+  display: block !important;
+}
+
+.VPSidebarItem .link:hover {
+  background: rgba(80, 250, 123, 0.1) !important;  /* 悬停背景 */
+}
+
+.VPSidebarItem.is-active .link {
+  background: rgba(80, 250, 123, 0.15) !important;  /* 激活项背景 */
 }
 
 /* 侧边栏文字 - 确保不截断 */
@@ -98,20 +118,30 @@
   white-space: normal !important;
   word-wrap: break-word !important;
   overflow-wrap: break-word !important;
-  line-height: 1.6 !important;
-  color: var(--vp-c-text-1) !important;  /* 统一使用白色 */
-  padding: 6px 12px 6px 0 !important;  /* 增加上下和右边距 */
-  display: block !important;
-  width: 100% !important;
+  line-height: 1.5 !important;  /* 标准行高 */
+  font-size: 14px !important;  /* 适中的字体大小 */
+  color: var(--vp-c-text-2) !important;  /* 使用次级文字颜色 */
+  font-weight: 400 !important;  /* 正常字重 */
 }
 
 .VPSidebarItem.is-active .text {
   color: var(--vp-c-brand-1) !important;  /* 激活项使用绿色 */
-  font-weight: 600;
+  font-weight: 600 !important;
 }
 
-.VPSidebarItem .text:hover {
+.VPSidebarItem .link:hover .text {
   color: var(--vp-c-brand-1) !important;  /* 悬停使用绿色 */
+}
+
+/* 侧边栏分组标题 */
+.VPSidebarItem.level-0 > .item > .text {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: var(--vp-c-text-1) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  margin-bottom: 8px !important;
+  padding: 8px 12px !important;
 }
 
 /* 内容区域 */
