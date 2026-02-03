@@ -418,10 +418,9 @@
 
 /* 4K 分辨率优化 */
 @media (min-width: 2560px) {
-  :root {
-    font-size: 18px;
-  }
+  /* 不修改全局font-size,保持默认16px */
   
+  /* 仅放大正文内容区域的文字 */
   .vp-doc h1 {
     font-size: 2.5rem;
   }
@@ -450,19 +449,24 @@
   
   /* 4K 下右侧目录也适当增宽 */
   .VPDocAside {
-    width: 280px !important;
+    width: 300px !important;
   }
   
-  /* 4K 下侧边栏更宽 */
+  /* 4K 下侧边栏更宽 - 从480px增加到520px */
   .VPSidebar {
-    width: 480px !important;
-    max-width: 480px !important;
+    width: 520px !important;
+    max-width: 520px !important;
   }
   
-  /* 4K 下侧边栏项目样式优化 */
+  /* 4K 下侧边栏项目保持14px字体 */
   .VPSidebarItem .text {
-    font-size: 1rem !important;
-    padding: 8px 12px 8px 0 !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+  }
+  
+  /* 4K 下增加链接的padding */
+  .VPSidebarItem .link {
+    padding: 10px 16px !important;
   }
 }
 
