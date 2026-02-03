@@ -45,29 +45,6 @@
 
 /* ========== 整体布局结构 ========== */
 
-/* 整体布局容器 - 限制最大宽度并居中 */
-.Layout {
-  max-width: var(--vp-layout-max-width);
-  margin: 0 auto;
-}
-
-/* 导航栏布局 - 限制宽度并居中 */
-.VPNav {
-  max-width: var(--vp-layout-max-width);
-  margin: 0 auto;
-}
-
-.VPNavBar .container {
-  max-width: var(--vp-layout-max-width);
-  margin: 0 auto;
-}
-
-/* 内容区域布局 */
-.VPContent {
-  max-width: var(--vp-layout-max-width);
-  margin: 0 auto;
-}
-
 /* 侧边栏宽度 */
 .VPSidebar {
   width: var(--vp-sidebar-width) !important;
@@ -79,13 +56,9 @@
   width: 224px !important;
 }
 
-/* 内容区域最大宽度 */
-.VPDoc.has-aside .content-container {
-  max-width: calc(var(--vp-layout-max-width) - var(--vp-sidebar-width) - 224px) !important;
-}
-
-.VPDoc:not(.has-aside) .content {
-  max-width: 800px !important;
+/* 导航栏内容的左侧padding要和侧边栏宽度一致 */
+.VPNavBar.has-sidebar .content {
+  padding-left: var(--vp-sidebar-width) !important;
 }
 
 /* Logo 样式 */
