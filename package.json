@@ -1,0 +1,15 @@
+{
+  "name": "zentzo-notebook",
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "devDependencies": {
+    "markdown-it-mathjax3": "^5.2.0",
+    "vitepress": "^1.6.4"
+  },
+  "description": "ZentZo的笔记本 - 游戏开发、独立游戏、调研资料"
+}
