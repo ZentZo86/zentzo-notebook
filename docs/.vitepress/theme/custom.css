@@ -59,18 +59,11 @@
   width: 240px !important;
 }
 
-/* Logo 样式 - 添加终端提示符 */
+/* Logo 样式 */
 .VPNavBarTitle .title {
   font-weight: 600;
   letter-spacing: -0.3px;
   color: var(--vp-c-text-1);
-}
-
-.VPNavBarTitle .title::before {
-  content: '>';
-  color: var(--vp-c-brand-1);
-  margin-right: 8px;
-  font-weight: 700;
 }
 
 .VPNavBarTitle .title:hover {
