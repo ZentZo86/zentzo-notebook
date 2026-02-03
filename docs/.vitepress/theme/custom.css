@@ -48,9 +48,9 @@
   max-width: 960px !important;
 }
 
-/* 侧边栏宽度优化 */
+/* 侧边栏宽度优化 - 增加宽度以容纳长标题 */
 .VPSidebar {
-  width: 280px !important;
+  width: 320px !important;
 }
 
 /* 右侧目录宽度优化 */
@@ -82,6 +82,14 @@
 .VPSidebar {
   background: var(--vp-c-bg-soft) !important;
   border-right: 1px solid var(--vp-c-divider);
+}
+
+/* 侧边栏文字不截断 */
+.VPSidebarItem .text {
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  line-height: 1.5 !important;
 }
 
 .VPSidebarItem.is-active .text {
