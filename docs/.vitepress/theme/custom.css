@@ -89,6 +89,8 @@
 .VPSidebar {
   background: var(--vp-c-bg-soft) !important;
   border-right: 1px solid var(--vp-c-divider);
+  padding-left: 16px !important;  /* 减少左内边距从32px到16px */
+  padding-right: 16px !important;  /* 减少右内边距从32px到16px */
 }
 
 /* 侧边栏文字 - 确保不截断 */
