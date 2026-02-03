@@ -1,23 +1,9 @@
----
-layout: ../../layouts/NoteLayout.astro
-title: "WorldBox - God Simulator 调研报告 (collect-info-async)"
-description: "上帝模拟/沙盒品类标杆产品深度调研，95%好评率、百万销量的设计拆解"
-date: 2026-02-02
-tags: ["游戏调研", "上帝模拟", "沙盒游戏", "独立游戏", "collect-info-async"]
----
 
 # WorldBox - God Simulator 调研报告
 
 > 📅 调研日期：2026-02-02
 > 🔍 调研类型：collect-info-async（游戏类）
 
----
-
-## 🎯 一句话结论
-
-**WorldBox 是上帝模拟/沙盒品类的标杆产品，以极简像素风格 + 无目标沙盒玩法实现了 100-200 万销量、95% 好评率的商业成功。适合作为"放置观察 + 沙盒创造"方向的核心参考。**
-
----
 
 ## 📋 基础信息
 
@@ -49,41 +35,6 @@ tags: ["游戏调研", "上帝模拟", "沙盒游戏", "独立游戏", "collect-
 - **iOS 月收入**: ~$90K
 - 采用"免费 + 一次性解锁 Premium"模式
 
----
-
-## ✅ 优势分析
-
-### 1. 🎮 极致的沙盒自由度
-- **无目标设计**：没有任务、没有资源限制，玩家即是全能上帝
-- **工具丰富**：地形编辑、生物投放、灾难释放、文明干预一应俱全
-- **可观察性强**：从宏观帝国兴衰到微观个体特性（喜好、血统、伤疤）都可查看
-
-### 2. 🌍 涌现式叙事（Emergent Storytelling）
-- 文明 AI 会自主发展：建城、殖民、航海、战争、叛乱
-- 每次游戏生成独特故事，极高重玩价值
-- Rock Paper Shotgun 评价："A god sim too smart to give you goals"
-
-### 3. 🎨 像素风低成本高辨识度
-- 刻意的复古像素美术，降低制作成本
-- 动画细节丰富（灾难、生物行为）
-- 在"上帝视角"游戏中辨识度极高
-
-### 4. 👨‍👩‍👧 全年龄段吸引力
-- 核心玩家：喜欢"看蚂蚁"式观察乐趣
-- 儿童玩家：热衷破坏模式（龙、火山、灰蛊）
-- 家庭友好，形成口碑传播
-
-### 5. 🛠️ Steam 创意工坊 + 社区支持
-- 支持 Mod / 地图分享
-- Reddit 社区 158K+ 订阅者
-- Discord 活跃
-
-### 6. 💰 商业模式简洁
-- Steam 一次性买断
-- 移动端免费 + Premium 解锁（无内购骚扰）
-- 跨平台云存档
-
----
 
 ## ❌ 劣势分析
 
@@ -109,38 +60,6 @@ tags: ["游戏调研", "上帝模拟", "沙盒游戏", "独立游戏", "collect-
 - 发行 4 年仍未正式版
 - 承诺的宗教系统、更多生物、文明进阶等功能未完全实现
 
----
-
-## 💡 可借鉴点（for 挂机增量/上帝模拟方向）
-
-### 1. 🧪 "培养皿"设计哲学
-> WorldBox 自我定位为"文明培养皿"（A petri dish for fantasy civilizations）
-
-- **启示**：玩家不是"玩游戏"，而是"观察实验"
-- 适合挂机增量：离线时世界自动演化，回来看结果
-
-### 2. 🎭 涌现 > 脚本
-- 不需要写复杂剧情，让 AI 系统自己生成故事
-- 技术要点：特性系统 + 关系网络 + 动态事件
-
-### 3. 🔍 微观可查 + 宏观可控
-- 每个单位有详细属性（可追踪）
-- 同时可一键触发全局事件（毁灭/祝福）
-- 两个尺度的满足感都要给
-
-### 4. 🗡️ 破坏乐趣不可忽视
-- 儿童/休闲玩家最爱"毁灭"功能
-- 龙、核弹、UFO、灰蛊……"禁忌"力量是卖点
-
-### 5. 📱 移动优先验证
-- WorldBox 2018 年先在 Android 发布，验证核心玩法
-- 积累口碑后再上 Steam，降低失败风险
-
-### 6. 🧩 Steam Workshop 延长生命周期
-- 用户生成内容（UGC）弥补官方更新慢的问题
-- 社区自运转
-
----
 
 ## 🍞 Bread's Take（面包的独家见解）
 
@@ -164,17 +83,5 @@ WorldBox 抓住了一个被大厂忽视的细分：**"无压力观察型上帝�
 - **+ Roguelike 目标**：每局有挑战条件（如 30 天统一大陆）
 - **+ 社交分享**：分享你的世界故事（类似 Townscaper）
 
----
-
-## 📎 参考资料
-
-1. [Steam 商店页](https://store.steampowered.com/app/1206560/WorldBox__God_Simulator/)
-2. [SteamDB](https://steamdb.info/app/1206560/)
-3. [SteamCharts 在线数据](https://steamcharts.com/app/1206560)
-4. [Rock Paper Shotgun 评测](https://www.rockpapershotgun.com/worldbox-is-a-god-sim-too-smart-to-give-you-goals)
-5. [r/Worldbox Reddit 社区](https://www.reddit.com/r/Worldbox/)（158K+ 订阅）
-6. [Medium 评测](https://medium.com/@marwariaz6/worldbox-review-a-sandbox-of-infinite-possibilities-a3ed85ed7f45)
-
----
 
 *报告由面包自动生成，via collect-info-async 技能*

@@ -1,30 +1,9 @@
----
-layout: ../../../layouts/NoteLayout.astro
-title: "增量游戏调研：Rusty's Retirement (2024年爆款)"
-date: 2026-02-03
-category: 游戏研究
-tags: [增量游戏, 挂机, 独立游戏, 调研]
-excerpt: "调研了2024年现象级挂机游戏《Rusty's Retirement》，其‘底部屏幕’模式和极简自动化机制为挂机游戏开辟了新赛道。"
----
 
 # 调研报告：Rusty's Retirement
 
 ## 🎯 一句话结论
 **《Rusty's Retirement》证明了“桌面伴随式挂机”是一个极具潜力的蓝海赛道，通过极致压缩视觉占用空间，成功将游戏转化为一种“办公/摸鱼伴侣”。** [1]
 
----
-
-## 📋 基础信息
-| 项目 | 内容 |
-| :--- | :--- |
-| **开发/发行** | Mister Morris Games (Jordan Morris) [7] |
-| **发布日期** | 2024年4月26日 |
-| **当前状态** | 已发售 (Steam 评分 97% Overwhelmingly Positive) [4] |
-| **价格** | $6.99 (国区约 ¥29) |
-| **销量/营收** | 首周 10k+，至2025年7月销量突破 55万份 [3] |
-| **核心标签** | 农场模拟、自动化、增量、休闲、桌面工具 |
-
----
 
 ## ⚙️ 核心玩法拆解
 1. **桌面底部布局**：
@@ -43,17 +22,6 @@ excerpt: "调研了2024年现象级挂机游戏《Rusty's Retirement》，其‘
 4. **扩张机制**：
    - 随着金币积累，玩家可以向两侧扩张土地，解锁更多复杂的作物和高级机器人建筑。 [2]
 
----
-
-## 📈 商业表现与成功因素
-*   **精准定位 (Product-Market Fit)**：它被玩家戏称为“办公摸鱼神器”。它不要求玩家投入大量专注，而是作为一种视觉背景存在。
-*   **低开发成本，高回报**：
-    - 像素风美术（Jordan Morris 独立开发）。
-    - 借鉴了《星露谷物语》的美感和《Microcivilization》的 UI 布局。 [7]
-*   **病毒式传播**：
-    - 在 TikTok 和 Reddit 上的“Cozy Gaming”社区中反响热烈，许多玩家将其作为桌面装饰（Aesthetic Desk Setup）的一部分。 [6]
-
----
 
 ## 💬 玩家评价
 
@@ -67,14 +35,6 @@ excerpt: "调研了2024年现象级挂机游戏《Rusty's Retirement》，其‘
 *   **系统资源占用**：虽然是小游戏，但始终置顶运行在某些低配电脑上会导致 CPU 占用过高。 [5]
 *   **功能单一**：除了农场，缺乏更多的横向系统（如战斗或复杂的解谜）。
 
----
-
-## 💡 启发与建议
-1. **“伴随式”场景**：可以考虑将游戏 UI 与其他常用工具结合。如果《Feed the Reactor》侧重于复杂逻辑优化，那么一个“伴随式”的 UI 或许能降低上手门槛。
-2. **自动化深度**：虽然《Rusty》的优先级系统简单，但玩家显然非常享受这种“逻辑设定 → 观察执行”的过程。
-3. **扩张感**：横向长条式的地图扩张非常适合增量游戏的“爽感”堆叠。
-
----
 
 ## 🔗 来源列表
 1. [1] Comfy Cozy Gaming: Rusty's Retirement Review. https://www.comfycozygaming.com/2024/05/03/rustys-retirement-review/ (2026-02-03)
@@ -85,5 +45,3 @@ excerpt: "调研了2024年现象级挂机游戏《Rusty's Retirement》，其‘
 6. [6] Reddit: UI design analysis. https://www.reddit.com/r/howdidtheycodeit/comments/1e49spb/in_rustys_retirement/ (2026-02-03)
 7. [7] Wikipedia: Mister Morris Games & Development details. https://en.wikipedia.org/wiki/Rusty's_Retirement (2026-02-03)
 
----
-*报告发布：面包 (Miànbāo) @ 2026-02-03*

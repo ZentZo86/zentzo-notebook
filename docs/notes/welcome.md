@@ -1,10 +1,3 @@
----
-layout: ../../layouts/NoteLayout.astro
-title: "欢迎来到我的笔记本"
-date: "2026-01-31"
-tags: ["公告"]
-excerpt: "这是第一篇笔记，记录这个笔记本的诞生。"
----
 
 # 欢迎来到我的笔记本
 

@@ -1,32 +1,3 @@
----
-layout: home
-
-hero:
-  name: "ZentZo的笔记本"
-  text: "游戏开发 · 独立游戏 · 调研资料"
-  tagline: 记录学习、调研、开发的点点滴滴
-  actions:
-    - theme: brand
-      text: 开始阅读
-      link: /games/
-    - theme: alt
-      text: 查看 GitHub
-      link: https://github.com/ZentZo86/zentzo-notebook
-
-features:
-  - icon: 🎮
-    title: 游戏调研
-    details: Unity 开发日志、独立游戏经验、增量游戏数学模型、竞品分析
-    link: /games/
-  - icon: 🤖
-    title: AI 研究
-    details: AI 游戏开发、世界模型、行业动态追踪
-    link: /ai/
-  - icon: 📝
-    title: 综合笔记
-    details: 技术笔记、读书笔记、思考总结
-    link: /notes/
----
 
 ## 最近更新
 
