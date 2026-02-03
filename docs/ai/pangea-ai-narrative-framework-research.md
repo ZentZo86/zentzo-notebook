@@ -46,9 +46,9 @@ PANGeA 并非单纯的 API 调用工具，而是一套完整的叙事生产管�
 
 **获取方式**：
 - **在线阅读**：[arXiv 摘要页面](https://arxiv.org/abs/2404.19721)
-- **PDF 下载**：[arXiv PDF](https://arxiv.org/pdf/2404.19721)
+- **PDF 下载**：[arXiv PDF](https://arxiv.org/pdf/2404.19721) | [本地存档](../papers/pangea-paper-aiide2024.pdf)
 - **AAAI 官方页面**：[AIIDE 2024 论文页面](https://ojs.aaai.org/index.php/AIIDE/article/view/31876)
-- **本地存档**：[论文 PDF](./attachments/pangea_paper.pdf)（已下载到本仓库）
+- **论文英文摘要**：[查看详细的论文结构概览](../papers/pangea-paper-summary-en.md)
 
 ---
 
