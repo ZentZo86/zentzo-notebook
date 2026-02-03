@@ -32,7 +32,7 @@
   
   /* 整体布局最大宽度 - 防止4K屏幕下布局过宽 */
   --vp-layout-max-width: 1440px;
-  --vp-sidebar-width: 272px;
+  --vp-sidebar-width: 300px;
 }
 
 /* 暗色模式 */
