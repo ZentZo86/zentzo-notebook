@@ -1,45 +1,45 @@
-/* Geek/Hacker 风格自定义主题 - 优化版 */
+/* Dracula-inspired Geek Theme - 统一协调的配色方案 */
 
 :root {
-  /* 终端配色方案 - 优化对比度 */
-  --vp-c-brand-1: #00ff88;
-  --vp-c-brand-2: #00dd77;
-  --vp-c-brand-3: #00bb66;
-  --vp-c-brand-soft: rgba(0, 255, 136, 0.14);
+  /* Dracula 配色方案 - 专业且协调 */
+  --vp-c-brand-1: #50fa7b;  /* Dracula Green */
+  --vp-c-brand-2: #50fa7b;
+  --vp-c-brand-3: #69ff94;  /* Bright Green */
+  --vp-c-brand-soft: rgba(80, 250, 123, 0.14);
   
-  /* 背景色 - 深色终端风格 */
-  --vp-c-bg: #0d1117;
-  --vp-c-bg-soft: #161b22;
-  --vp-c-bg-mute: #1f2937;
-  --vp-c-bg-alt: #2d3748;
+  /* 背景色 - Dracula 风格 */
+  --vp-c-bg: #282a36;  /* Dracula Background */
+  --vp-c-bg-soft: #343746;  /* Floating elements */
+  --vp-c-bg-mute: #44475a;  /* Selection */
+  --vp-c-bg-alt: #6272a4;  /* Current Line */
   
-  /* 文字颜色 - 提高对比度 */
-  --vp-c-text-1: #f0f6fc;
-  --vp-c-text-2: #c9d1d9;
-  --vp-c-text-3: #8b949e;
+  /* 文字颜色 - 统一使用 Dracula Foreground */
+  --vp-c-text-1: #f8f8f2;  /* Dracula Foreground - 主文字 */
+  --vp-c-text-2: #f8f8f2;  /* 统一使用白色，不混用绿色 */
+  --vp-c-text-3: #6272a4;  /* Comment color - 辅助文字 */
   
   /* 边框和分隔线 */
-  --vp-c-divider: rgba(0, 255, 136, 0.15);
-  --vp-c-gutter: rgba(0, 255, 136, 0.08);
+  --vp-c-divider: rgba(98, 114, 164, 0.3);
+  --vp-c-gutter: rgba(98, 114, 164, 0.15);
   
   /* 代码块背景 */
-  --vp-code-bg: #0d1117;
-  --vp-code-block-bg: #0d1117;
+  --vp-code-bg: #21222c;  /* Dracula ANSI Black */
+  --vp-code-block-bg: #21222c;
   
-  /* 字体 - 回退到系统字体以提高可读性 */
+  /* 字体 - 系统字体保证可读性 */
   --vp-font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
   --vp-font-family-mono: 'SF Mono', 'Consolas', 'Liberation Mono', Menlo, Courier, monospace;
 }
 
-/* 暗色模式优化 */
+/* 暗色模式 */
 .dark {
-  --vp-c-bg: #0d1117;
-  --vp-c-bg-soft: #161b22;
-  --vp-c-bg-mute: #1f2937;
-  --vp-c-bg-alt: #2d3748;
+  --vp-c-bg: #282a36;
+  --vp-c-bg-soft: #343746;
+  --vp-c-bg-mute: #44475a;
+  --vp-c-bg-alt: #6272a4;
 }
 
-/* 4K 分辨率优化 - 限制内容最大宽度 */
+/* 内容最大宽度限制 - 适配所有分辨率 */
 .VPDoc.has-aside .content-container {
   max-width: 1400px !important;
 }
@@ -48,24 +48,31 @@
   max-width: 960px !important;
 }
 
-/* 侧边栏宽度优化 - 增加宽度以容纳长标题 */
+/* 侧边栏宽度 - 增加到足够容纳长标题 */
 .VPSidebar {
-  width: 320px !important;
+  width: 360px !important;
+  max-width: 360px !important;
 }
 
-/* 右侧目录宽度优化 */
+/* 右侧目录宽度 */
 .VPDocAside {
   width: 240px !important;
 }
 
-/* Logo 样式 - 减弱发光效果 */
+/* Logo 样式 - 添加终端提示符 */
 .VPNavBarTitle .title {
   font-weight: 600;
   letter-spacing: -0.3px;
   color: var(--vp-c-text-1);
 }
 
-/* 移除过度的发光动画 */
+.VPNavBarTitle .title::before {
+  content: '>';
+  color: var(--vp-c-brand-1);
+  margin-right: 8px;
+  font-weight: 700;
+}
+
 .VPNavBarTitle .title:hover {
   color: var(--vp-c-brand-1);
   transition: color 0.2s ease;
@@ -73,7 +80,7 @@
 
 /* 导航栏样式 */
 .VPNavBar {
-  background: rgba(13, 17, 23, 0.95) !important;
+  background: rgba(40, 42, 54, 0.95) !important;
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--vp-c-divider);
 }
@@ -84,21 +91,23 @@
   border-right: 1px solid var(--vp-c-divider);
 }
 
-/* 侧边栏文字不截断 */
+/* 侧边栏文字 - 确保不截断 */
 .VPSidebarItem .text {
   white-space: normal !important;
   word-wrap: break-word !important;
   overflow-wrap: break-word !important;
   line-height: 1.5 !important;
+  color: var(--vp-c-text-1) !important;  /* 统一使用白色 */
+  padding-right: 8px !important;  /* 添加右边距避免贴边 */
 }
 
 .VPSidebarItem.is-active .text {
-  color: var(--vp-c-brand-1) !important;
+  color: var(--vp-c-brand-1) !important;  /* 激活项使用绿色 */
   font-weight: 600;
 }
 
 .VPSidebarItem .text:hover {
-  color: var(--vp-c-brand-1) !important;
+  color: var(--vp-c-brand-1) !important;  /* 悬停使用绿色 */
 }
 
 /* 内容区域 */
@@ -106,46 +115,37 @@
   background: transparent;
 }
 
-/* 标题样式 - 优化可读性 */
+/* 标题样式 - 统一使用白色 */
 .vp-doc h1 {
   border-bottom: 2px solid var(--vp-c-divider);
   padding-bottom: 0.5rem;
-  color: var(--vp-c-text-1);
+  color: var(--vp-c-text-1);  /* 白色 */
   font-weight: 700;
   letter-spacing: -0.5px;
-}
-
-/* 移除闪烁光标 */
-.vp-doc h1::after {
-  content: none;
 }
 
 .vp-doc h2 {
   border-bottom: 1px solid var(--vp-c-divider);
   padding-bottom: 0.3rem;
-  color: var(--vp-c-brand-1);
+  color: var(--vp-c-text-1);  /* 白色 */
   font-weight: 600;
 }
 
-.vp-doc h3 {
-  color: var(--vp-c-text-1);
-  font-weight: 600;
-}
-
+.vp-doc h3,
 .vp-doc h4,
 .vp-doc h5,
 .vp-doc h6 {
-  color: var(--vp-c-text-1);
+  color: var(--vp-c-text-1);  /* 白色 */
   font-weight: 600;
 }
 
-/* 段落文字 - 提高可读性 */
+/* 段落文字 - 统一使用白色 */
 .vp-doc p {
-  color: var(--vp-c-text-2);
+  color: var(--vp-c-text-1);  /* 白色 */
   line-height: 1.75;
 }
 
-/* 链接样式 - 优化对比度 */
+/* 链接样式 - 使用 Dracula Green */
 .vp-doc a {
   color: var(--vp-c-brand-1);
   text-decoration: none;
@@ -160,7 +160,7 @@
 
 /* 代码块样式 */
 .vp-doc div[class*='language-'] {
-  background: var(--vp-c-bg-soft) !important;
+  background: var(--vp-code-bg) !important;
   border: 1px solid var(--vp-c-divider);
   border-radius: 8px;
   margin: 1.5rem 0;
@@ -173,11 +173,11 @@
   color: var(--vp-c-text-1);
 }
 
-/* 行内代码 */
+/* 行内代码 - 使用 Dracula Green */
 .vp-doc code {
-  background: var(--vp-c-bg-mute);
+  background: rgba(80, 250, 123, 0.1);
   color: var(--vp-c-brand-1);
-  border: 1px solid var(--vp-c-divider);
+  border: 1px solid rgba(80, 250, 123, 0.2);
   padding: 3px 6px;
   border-radius: 4px;
   font-family: var(--vp-font-family-mono);
@@ -190,7 +190,7 @@
   background: var(--vp-c-bg-soft);
   padding: 1rem 1.5rem;
   margin: 1.5rem 0;
-  color: var(--vp-c-text-2);
+  color: var(--vp-c-text-1);
 }
 
 /* 表格样式 */
@@ -202,7 +202,7 @@
 
 .vp-doc th {
   background: var(--vp-c-bg-soft);
-  color: var(--vp-c-brand-1);
+  color: var(--vp-c-brand-1);  /* 表头使用绿色 */
   border: 1px solid var(--vp-c-divider);
   font-weight: 600;
   padding: 12px 16px;
@@ -211,7 +211,7 @@
 .vp-doc td {
   border: 1px solid var(--vp-c-divider);
   padding: 12px 16px;
-  color: var(--vp-c-text-2);
+  color: var(--vp-c-text-1);  /* 白色 */
 }
 
 .vp-doc tr:hover {
@@ -222,7 +222,7 @@
 .DocSearch-Button {
   background: var(--vp-c-bg-mute) !important;
   border: 1px solid var(--vp-c-divider) !important;
-  color: var(--vp-c-text-2) !important;
+  color: var(--vp-c-text-1) !important;
 }
 
 .DocSearch-Button:hover {
@@ -234,13 +234,13 @@
 .VPButton.brand {
   background: var(--vp-c-brand-1);
   border: none;
-  color: #000000;
+  color: #282a36;  /* Dracula Background */
   font-weight: 600;
   transition: all 0.2s ease;
 }
 
 .VPButton.brand:hover {
-  background: var(--vp-c-brand-2);
+  background: #69ff94;  /* Bright Green */
   transform: translateY(-1px);
 }
 
@@ -252,7 +252,7 @@
 }
 
 .VPButton.alt:hover {
-  background: var(--vp-c-bg-mute);
+  background: rgba(80, 250, 123, 0.1);
 }
 
 /* Feature 卡片样式 */
@@ -274,21 +274,18 @@
 }
 
 .VPFeature .details {
-  color: var(--vp-c-text-2);
+  color: var(--vp-c-text-1);
 }
 
 /* Hero 区域样式 */
 .VPHero .name {
-  background: linear-gradient(135deg, var(--vp-c-brand-1) 0%, var(--vp-c-brand-2) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--vp-c-brand-1);
   font-weight: 800;
   letter-spacing: -1px;
 }
 
 .VPHero .text {
-  color: var(--vp-c-text-2);
+  color: var(--vp-c-text-1);
 }
 
 .VPHero .tagline {
@@ -297,7 +294,7 @@
 
 /* 目录导航样式 */
 .VPDocAsideOutline .outline-link {
-  color: var(--vp-c-text-3);
+  color: var(--vp-c-text-1);  /* 白色 */
   border-left: 2px solid var(--vp-c-divider);
   transition: all 0.2s ease;
   padding-left: 12px;
@@ -354,15 +351,10 @@
   background: var(--vp-c-bg-alt);
 }
 
-/* 移除扫描线效果 */
-body::before {
-  content: none;
-}
-
-/* 列表样式优化 */
+/* 列表样式 */
 .vp-doc ul,
 .vp-doc ol {
-  color: var(--vp-c-text-2);
+  color: var(--vp-c-text-1);  /* 白色 */
 }
 
 .vp-doc ul li::marker {
@@ -380,7 +372,7 @@ body::before {
 
 /* 强调文本 */
 .vp-doc strong {
-  color: var(--vp-c-text-1);
+  color: var(--vp-c-brand-1);  /* 绿色强调 */
   font-weight: 600;
 }
 
@@ -390,7 +382,7 @@ body::before {
   margin: 2rem 0;
 }
 
-/* 4K 分辨率下的字体大小优化 */
+/* 4K 分辨率优化 */
 @media (min-width: 2560px) {
   :root {
     font-size: 18px;
@@ -421,12 +413,23 @@ body::before {
   .VPDoc.has-aside .content-container {
     max-width: 1600px !important;
   }
+  
+  /* 4K 下侧边栏更宽 */
+  .VPSidebar {
+    width: 400px !important;
+    max-width: 400px !important;
+  }
 }
 
 /* 平板和小屏幕优化 */
 @media (max-width: 1280px) {
   .VPDoc.has-aside .content-container {
     max-width: 100% !important;
+  }
+  
+  .VPSidebar {
+    width: 300px !important;
+    max-width: 300px !important;
   }
 }
 
@@ -447,36 +450,27 @@ body::before {
   .vp-doc h3 {
     font-size: 1.25rem;
   }
+  
+  .VPSidebar {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
 }
 
-/* 添加微妙的 Geek 元素但不过度 */
-.VPNavBarTitle .title::before {
-  content: '>';
-  color: var(--vp-c-brand-1);
-  margin-right: 8px;
-  font-weight: 700;
-}
-
-/* 代码块行号优化 */
-.vp-doc div[class*='language-'] .line-numbers-wrapper {
-  color: var(--vp-c-text-3);
-  border-right: 1px solid var(--vp-c-divider);
-}
-
-/* 优化选中文本的颜色 */
+/* 选中文本的颜色 */
 ::selection {
-  background: rgba(0, 255, 136, 0.3);
+  background: rgba(80, 250, 123, 0.3);
   color: var(--vp-c-text-1);
 }
 
-/* 焦点状态优化 */
+/* 焦点状态 */
 a:focus-visible,
 button:focus-visible {
   outline: 2px solid var(--vp-c-brand-1);
   outline-offset: 2px;
 }
 
-/* 图片样式优化 */
+/* 图片样式 */
 .vp-doc img {
   border-radius: 8px;
   border: 1px solid var(--vp-c-divider);
@@ -497,9 +491,28 @@ button:focus-visible {
 }
 
 .vp-doc .custom-block.warning {
-  border-left-color: #fbbf24;
+  border-left-color: #f1fa8c;  /* Dracula Yellow */
 }
 
 .vp-doc .custom-block.danger {
-  border-left-color: #ef4444;
+  border-left-color: #ff5555;  /* Dracula Red */
+}
+
+/* 代码块行号 */
+.vp-doc div[class*='language-'] .line-numbers-wrapper {
+  color: var(--vp-c-text-3);
+  border-right: 1px solid var(--vp-c-divider);
+}
+
+/* 导航链接样式 */
+.VPNavBarMenuLink {
+  color: var(--vp-c-text-1) !important;
+}
+
+.VPNavBarMenuLink:hover {
+  color: var(--vp-c-brand-1) !important;
+}
+
+.VPNavBarMenuLink.active {
+  color: var(--vp-c-brand-1) !important;
 }
