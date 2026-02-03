@@ -4,6 +4,7 @@
 
 ## 最近更新
 
+- [PANGeA: 程序化 AI 叙事框架深度调研](/ai/pangea-ai-narrative-framework-research) - 2026-02-03
 - [增量游戏调研：Rusty's Retirement (2024年爆款)](/games/rustys-retirement) - 2026-02-03
 - [《Feed the Reactor》核心系统结构深度拆解报告](/games/feed-the-reactor-deep-analysis) - 2026-02-02
 - [WorldBox - God Simulator: 深度调研原始报告合集](/games/worldbox-deep-research) - 2026-02-02
