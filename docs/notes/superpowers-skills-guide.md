@@ -3,20 +3,18 @@
 > 📅 记录日期：2026-02-05
 > 🧠 来源：[obra/superpowers](https://github.com/obra/superpowers)
 
-本文档总结了 AI 编程助手（Agent）的 **14 个“超能力”技能** 及其标准工作流。面包已经完成了全量安装。
+本文档总结了 AI 编程助手（Agent）的 **11 个“超能力”技能** 及其标准工作流。面包已经完成了安装（并根据老板指示剔除了不适用的 3 项）。
 
 ---
 
 ## 快速参考表
 
-### 已安装 Skills (14个)
+### 已安装 Skills (11个)
 | Skill | 触发命令 | 一句话描述 | 类型 |
 |-------|----------|-----------|------|
 | brainstorming | `/brainstorming` | 创意工作前，一次问一个问题，探索意图和设计 | 流程 |
 | systematic-debugging | `/systematic-debugging` | 四阶段调试法，找到根因才能修复 | 流程 |
 | receiving-code-review | `/receiving-code-review` | 收到 review 时：技术验证 > 表演性同意 | 协作 |
-| using-git-worktrees | `/using-git-worktrees` | 用 Git worktrees 隔离开发环境 | 工具 |
-| finishing-a-development-branch | `/finishing-a-development-branch` | 分支开发完成后的标准收尾流程 | 流程 |
 | writing-skills | `/writing-skills` | 如何写好 AI Agent Skills（元指南）| 元技能 |
 | writing-plans | (自动触发) | 写详细实施计划，假设执行者零上下文 | 流程 |
 | test-driven-development | (自动触发) | RED-GREEN-REFACTOR，铁律无例外 | 方法论 |
@@ -25,7 +23,6 @@
 | subagent-driven-development | (自动触发) | 每任务一个子代理，两阶段 review | 协作 |
 | dispatching-parallel-agents | (自动触发) | 多独立任务并行调度代理 | 协作 |
 | requesting-code-review | (自动触发) | 完成任务后调度 code-reviewer 子代理 | 协作 |
-| using-superpowers | (自动触发) | 任何对话开始时检查是否有 skill 适用 | 元技能 |
 
 ---
 
@@ -54,21 +51,7 @@
 
 ---
 
-## 第二章：隔离与收尾
-
-### 4. using-git-worktrees（工作空间隔离）
-- 自动检测并使用 `.worktrees/` 目录。
-- 确保目录已被 `.gitignore`。
-- 每个分支一个独立目录，互不干扰，无需 `stash`。
-
-### 5. finishing-a-development-branch（分支收尾）
-1. **验证**：运行全量测试。
-2. **选择**：本地合并、创建 PR、保持现状 或 丢弃。
-3. **执行**：根据选择处理分支并清理 worktree。
-
----
-
-## 第三章：完整工作流程图
+## 第二章：完整工作流程图
 
 ```mermaid
 graph TD
@@ -77,14 +60,12 @@ graph TD
     C --> D[writing-plans]
     B -- No --> E{Bug调试?}
     E -- Yes --> F[/systematic-debugging]
-    E -- No --> G[/using-git-worktrees]
-    D --> G
-    F --> G
-    G --> H[实现阶段]
+    D --> H[实现阶段]
+    F --> H
     H --> I{遵循 TDD?}
     I -- Yes --> J[RED -> GREEN -> REFACTOR]
     J --> K[验证证据]
-    K --> L[/finishing-a-development-branch]
+    K --> L[完成汇报]
 ```
 
 ---
