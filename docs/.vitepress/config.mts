@@ -12,6 +12,7 @@ export default defineConfig({
       { text: '首页', link: '/' },
       { text: '🎮 游戏调研', link: '/games/' },
       { text: '🤖 AI 研究', link: '/ai/' },
+      { text: '📖 学习笔记', link: '/learning/' },
       { text: '📝 综合笔记', link: '/notes/' }
     ],
 
@@ -37,6 +38,14 @@ export default defineConfig({
           text: '🤖 AI 研究',
           items: [
             { text: 'Google Project Genie 深度研究', link: '/ai/google-project-genie-deep-dive' }
+          ]
+        }
+      ],
+      '/learning/': [
+        {
+          text: '📖 学习笔记',
+          items: [
+            // 学习笔记将在这里添加
           ]
         }
       ],
