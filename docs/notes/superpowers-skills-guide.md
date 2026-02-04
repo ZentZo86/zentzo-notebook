@@ -3,13 +3,13 @@
 > 📅 记录日期：2026-02-05
 > 🧠 来源：[obra/superpowers](https://github.com/obra/superpowers)
 
-本文档总结了 AI 编程助手（Agent）的九大“超能力”技能及其标准工作流。
+本文档总结了 AI 编程助手（Agent）的 **14 个“超能力”技能** 及其标准工作流。面包已经完成了全量安装。
 
 ---
 
 ## 快速参考表
 
-### 已安装 Skills
+### 已安装 Skills (14个)
 | Skill | 触发命令 | 一句话描述 | 类型 |
 |-------|----------|-----------|------|
 | brainstorming | `/brainstorming` | 创意工作前，一次问一个问题，探索意图和设计 | 流程 |
@@ -21,6 +21,11 @@
 | writing-plans | (自动触发) | 写详细实施计划，假设执行者零上下文 | 流程 |
 | test-driven-development | (自动触发) | RED-GREEN-REFACTOR，铁律无例外 | 方法论 |
 | executing-plans | (自动触发) | 加载计划，分批执行，每批后报告 | 流程 |
+| verification-before-completion | (自动触发) | 没有验证证据就不能声称完成 | 方法论 |
+| subagent-driven-development | (自动触发) | 每任务一个子代理，两阶段 review | 协作 |
+| dispatching-parallel-agents | (自动触发) | 多独立任务并行调度代理 | 协作 |
+| requesting-code-review | (自动触发) | 完成任务后调度 code-reviewer 子代理 | 协作 |
+| using-superpowers | (自动触发) | 任何对话开始时检查是否有 skill 适用 | 元技能 |
 
 ---
 
