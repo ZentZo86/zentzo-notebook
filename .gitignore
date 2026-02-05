@@ -1,5 +1,75 @@
-node_modules
+# build output
+dist/
+# generated types
+.astro/
+
+# dependencies
+node_modules/
 .vitepress/cache
 .vitepress/dist
 docs/.vitepress/cache
 docs/.vitepress/dist
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
+.DS_Store
+
+# jetbrains setting folder
+.idea/
+.vercel
+
+# OpenClaw Workspace Git Ignore
+.openclaw/
+.clawdhub/
+memory/
+trash/
+Zhang_Tianzhu_Resume*
+knowledge/
+scripts/
+skills/
+*.pdf
+*.jsonl
+*.log
+
+# Sensitive Identity/Config
+MEMORY.md
+USER.md
+SOUL.md
+TOOLS.md
+IDENTITY.md
+AGENTS.md
+HEARTBEAT.md
+SUBAGENT-RULES.md
+deep-research-skill.md
+惊喜-面包给你准备的.md
+
+# Allow only the notebook project
+!projects/zentzo-notebook/
+!projects/zentzo-notebook/**
+
+# Ignore root markdown files (prevent clutter commit)
+/*.md
+!README.md
+!MEMORY.md
+!USER.md
+!SOUL.md
+!TOOLS.md
+!IDENTITY.md
+!AGENTS.md
+!HEARTBEAT.md
+!SUBAGENT-RULES.md
+!BOOTSTRAP.md
+
+# Ignore loose folders often created by mistake
+/Documents/
+/research/
+/Downloads/

@@ -1,0 +1,22 @@
+# 1.1 属性 (Properties)
+
+我们首先根据 Godot 官方文档对网格（Mesh）的定义开始我们的探索：
+
+![](images/888ad8d0d78c77e44a6ba6dc885a33f232c8a5cb398d2f33312f405aea4df0c3.jpg)
+
+网格（Mesh）是一种包含基于顶点数组几何体的资源类型，被划分为多个表面（Surfaces）。每个表面包含一个完全独立的数组和用于绘制它的材质。从设计角度来看，具有多个表面的网格优于单个表面，因为在 3D 编辑软件中创建的对象通常包含多种材质。
+
+https://docs.godotengine.org/en/stable/classes/class_mesh.html
+
+![](images/9c8a95b7b4171535b92d1d173327ec0d07276b5f159636833393744f9332b1b1.jpg)
+
+这个定义与 Autodesk Maya 或 Blender 等其他 3D 工具中的定义是一致的，因为它们在 3D 几何体的定义和操作方式上有着共同的基本原则。在着色器（Shader）和视觉特效开发的背景下，网格提供了我们应用材质、纹理以及所有赋予屏幕上模型生命和个性的资源的基础。
+
+当我们谈论顶点数组时，我们指的是定义对象形状的点（Points）的有序列。网格不仅存储这些点；它还包括一组额外的属性，这些属性共同定义了构成模型的多边形面（三角形）。这些属性包括：
+
+- 顶点 (Vertices)
+- 法线 (Normals)
+- UV 坐标 (UV Coordinates)
+- 副切线 (Bitangents 或 Binormals)
+- 切线 (Tangents)
+- 顶点颜色 (Vertex Color)
