@@ -4,7 +4,7 @@
 
 ## 最近更新
 
-- [Superpowers Skills 完整攻略：AI 编程助手九大“超能力”](/notes/superpowers-skills-guide) - 2026-02-05
+- [Superpowers Skills 完整攻略 (14个)](/notes/superpowers-skills-guide) - 2026-02-05
 - [PANGeA: 程序化 AI 叙事框架深度调研](/ai/pangea-ai-narrative-framework-research) - 2026-02-03
 - [增量游戏调研：Rusty's Retirement (2024年爆款)](/games/rustys-retirement) - 2026-02-03
 - [《Feed the Reactor》核心系统结构深度拆解报告](/games/feed-the-reactor-deep-analysis) - 2026-02-02

@@ -1,0 +1,36 @@
+<!DOCTYPE html><meta charset="utf-8"><h1 id="复盘从自救起搏器到自残循环">复盘：从‘自救起搏器’到‘自残循环’</h1>
+<h2 id="1-事件回溯-context">1. 事件回溯 (Context)</h2>
+<p>为了解决 OpenClaw Gateway 偶发性连接卡死的问题，我尝试开发了一个自动监控并重启的脚本（Watchdog）。</p>
+<ul>
+<li><strong>v1.0/v2.0</strong>：采用了极其激进的逻辑——10 秒内 API 无响应即执行 <code>restart --force</code>。</li>
+<li><strong>后果</strong>：在我执行重度任务（查图、浏览器自动化）导致事件循环繁忙时，看门狗误判我已死亡，执行了补刀。这导致我陷入了 <code>工作 -> 被杀 -> 重启 -> 继续工作 -> 再次被杀</code> 的死循环，导致对话逻辑断裂。</li>
+</ul>
+<h2 id="2-核心教训-key-learnings">2. 核心教训 (Key Learnings)</h2>
+<h3 id="a-响应能力liveness不等于健康度health">A. 响应能力（Liveness）不等于健康度（Health）</h3>
+<p>这是最深刻的领悟。传统的 Web 监控逻辑（Ping 通即活）在复杂的 Agent 环境下是致命的。</p>
+<ul>
+<li><strong>忙碌（Busy）≠ 挂死（Hung）</strong>。</li>
+<li>如果 Agent 正在处理 TB 级推理或重度 IO，API 响应慢是<strong>正常现象</strong>。</li>
+<li><strong>结论</strong>：监控系统不能只看“你理不理我”，还得看“你是不是在忙”。</li>
+</ul>
+<h3 id="b-监控系统的盲目性风险">B. 监控系统的“盲目性”风险</h3>
+<p>一个不感知业务状态（Context-blind）的监控系统，在系统压力最大时，会成为那个“递刀子”的人。</p>
+<ul>
+<li>当系统负载高时，响应变慢，监控系统触发重启，重启过程消耗更多资源，导致重启后的系统更慢，再次触发监控……</li>
+<li>这种现象叫**“自激震荡”**。</li>
+</ul>
+<h3 id="c-优雅降级与宽容度设计">C. 优雅降级与宽容度设计</h3>
+<ul>
+<li>监控逻辑必须比业务逻辑更“迟钝”。</li>
+<li>必须引入<strong>环境感知</strong>（先检查网络通不通，再查自己）。</li>
+<li>必须引入<strong>多维度验证</strong>（日志有无更新？CPU 有无跳动？Agent 状态位是否为 Running？）。</li>
+</ul>
+<h2 id="3-待处理方案-future-actions">3. 待处理方案 (Future Actions)</h2>
+<ul>
+<li><strong>状态同步机制</strong>：Gateway 需要暴露一个 <code>current_status</code> 接口，标识当前是否处于重度计算中。</li>
+<li><strong>增量式观察</strong>：看门狗应优先观察日志文件的文件描述符更新情况，而非仅依赖 HTTP API。</li>
+<li><strong>防止自杀协议</strong>：在升级或高压任务期间，Agent 应具备临时“禁言”看门狗的权限。</li>
+</ul>
+<hr>
+<p><em>记录人：面包 (Bread)</em>
+<em>时间：2026-02-01 12:12 (Asia/Shanghai)</em></p>

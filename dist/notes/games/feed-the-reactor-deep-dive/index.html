@@ -1,0 +1,62 @@
+<!DOCTYPE html><meta charset="utf-8"><h1 id="feed-the-reactor系统结构与深度拆解汇总">《Feed the Reactor》系统结构与深度拆解汇总</h1>
+<blockquote>
+<p><strong>参考来源</strong>：Rock Paper Shotgun, GameHelper.io, Steam Community (2025-2026)
+<strong>投研级分析</strong>：面包 🍞</p>
+</blockquote>
+<hr>
+<h2 id="️-第一部分核心系统结构-system-structure">🏗️ 第一部分：核心系统结构 (System Structure)</h2>
+<p>《Feed the Reactor》是一款典型的“展开式”增量游戏，其系统由多个相互嵌套的层级组成：</p>
+<h3 id="1-核心循环-the-core-loop">1. 核心循环 (The Core Loop)</h3>
+<ul>
+<li><strong>资源池 (Material Pool)</strong>：游戏的核心限制。不同于无限堆砌的游戏，这里每个物体（燃料、点火器、修饰符）都占用物质单位。这种设计将游戏从“纯挂机”转变为“资源空间管理”。</li>
+<li><strong>物质回收</strong>：物体 HP 归零后，物质单位会返还，形成动态流转。</li>
+</ul>
+<h3 id="2-功能层级-layers">2. 功能层级 (Layers)</h3>
+<ul>
+<li><strong>生产层 (Production)</strong>：燃料球 + 点火器。产生基础能量。</li>
+<li><strong>修饰层 (Modifier)</strong>：加热器 (Heaters) 增加点火伤害；浓缩器 (Enrichers) 增加燃料 HP。</li>
+<li><strong>存储层 (Storage)</strong>：核心 (Cores) 决定了能量存储上限和产出的表面积。</li>
+<li><strong>元游戏层 (Meta-Game)</strong>：包含“冷冻梦境 (Cryo-dreaming)”迷你游戏和“星际战争”系统，通过外部反馈提供全局乘数。</li>
+</ul>
+<hr>
+<h2 id="-第二部分底层数学逻辑--碰撞模拟与转换摩擦">🔬 第二部分：底层数学逻辑 —— 碰撞模拟与转换摩擦</h2>
+<h3 id="1-能量产出公式">1. 能量产出公式</h3>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mi>n</mi><mi>e</mi><mi>r</mi><mi>g</mi><mi>y</mi><mo>=</mo><mi>D</mi><mi>a</mi><mi>m</mi><mi>a</mi><mi>g</mi><msub><mi>e</mi><mrow><mi>I</mi><mi>g</mi><mi>n</mi><mi>i</mi><mi>t</mi><mi>e</mi><mi>r</mi></mrow></msub><mo>×</mo><mi>F</mi><mi>r</mi><mi>e</mi><mi>q</mi><mi>u</mi><mi>e</mi><mi>n</mi><mi>c</mi><msub><mi>y</mi><mrow><mi>C</mi><mi>o</mi><mi>l</mi><mi>l</mi><mi>i</mi><mi>s</mi><mi>i</mi><mi>o</mi><mi>n</mi></mrow></msub></mrow><annotation encoding="application/x-tex">Energy = Damage_{Igniter} \times Frequency_{Collision}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord mathnormal">n</span><span class="mord mathnormal" style="margin-right:0.02778em;">er</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="mord mathnormal">ama</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07847em;">I</span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">g</span><span class="mord mathnormal mtight">ni</span><span class="mord mathnormal mtight">t</span><span class="mord mathnormal mtight" style="margin-right:0.02778em;">er</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mord mathnormal">re</span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="mord mathnormal">u</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord mathnormal">c</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07153em;">C</span><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight" style="margin-right:0.01968em;">ll</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight">s</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>
+能量产出并不直接来自拥有数，而是来自“发生的互动次数”。</p>
+<h3 id="2-燃料-hp-的辩证法-hp-paradox">2. 燃料 HP 的辩证法 (HP Paradox)</h3>
+<ul>
+<li><strong>周转率 vs 产出</strong>：
+<ul>
+<li><strong>HP 太高</strong>：物体占据物质池时间过长，导致新物体无法进入，产出受阻。</li>
+<li><strong>HP 太低</strong>：物体还没来得及产生足够能量就消失了，浪费投入成本。</li>
+</ul>
+</li>
+<li><strong>优化点</strong>：玩家需要不断微调点火伤害与燃料 HP，以达到“单位物质产出比”的最大化。</li>
+</ul>
+<hr>
+<h2 id="-第三部分空间几何策略--位置决定一切">📐 第三部分：空间几何策略 —— 位置决定一切</h2>
+<h3 id="1-核心体-the-core-效应">1. 核心体 (The Core) 效应</h3>
+<p>中心体体积越大，表面积越大，能同时点燃的燃料就越多。</p>
+<h3 id="2-顶级玩家布局-meta-layout">2. 顶级玩家布局 (Meta Layout)</h3>
+<ul>
+<li><strong>圆心区域</strong>：堆放 <strong>50 个加热器</strong>和 <strong>50 个浓缩器</strong>。</li>
+<li><strong>外环区域</strong>：环绕 <strong>20 个点火器</strong>和 <strong>30 个核心 (Cores)</strong>。</li>
+<li><strong>流体力学</strong>：外围留出空间让燃料球自由流动，增加碰撞机会。</li>
+</ul>
+<hr>
+<h2 id="-第四部分2026-极限突破与-ascension">⚡ 第四部分：2026 极限突破与 Ascension</h2>
+<h3 id="1-燃料管理">1. 燃料管理</h3>
+<ul>
+<li><strong>Radioactive Fuel（放射性燃料）</strong>：冲关 Lvl 50 的关键爆发手段，配合 <strong>The Pump（泵）</strong> 机制瞬间倾泻资源。</li>
+</ul>
+<h3 id="2-ascension-声望">2. Ascension (声望)</h3>
+<ul>
+<li><strong>非线性重置</strong>：通过永恒解锁跳过繁琐阶段，重点在于解锁改变物理规则的 <strong>Perks（特权）</strong>。</li>
+</ul>
+<h3 id="3-性能管理-fps-strategy">3. 性能管理 (FPS Strategy)</h3>
+<ul>
+<li><strong>精兵路线</strong>：由于版本性能问题，后期应升级单体质量而非堆积数量，减少物理计算负荷，防止 FPS 跌至个位数。</li>
+</ul>
+<hr>
+<h2 id="-总结">📝 总结</h2>
+<p>《Feed the Reactor》将**微积分（变化率）、几何学（碰撞空间）和管理学（资源周转）**完美融合。它不仅仅是在看数字变大，而是在设计一个高效且稳定的物理反应堆系统。</p>

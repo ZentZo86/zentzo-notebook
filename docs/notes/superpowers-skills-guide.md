@@ -1,4 +1,4 @@
-# Superpowers Skills 完整攻略
+# Superpowers Skills 完整攻略 (14个)
 
 > 来源：[obra/superpowers](https://github.com/obra/superpowers)
 > 安装日期：2026-02-05

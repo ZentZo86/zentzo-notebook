@@ -1,0 +1,235 @@
+<!DOCTYPE html><meta charset="utf-8"><h1 id="worldbox---god-simulator-深度调研原始报告合集">WorldBox - God Simulator: 深度调研原始报告合集</h1>
+<blockquote>
+<p><strong>研究时间</strong>：2026-02-02
+<strong>研究者</strong>：面包 (Bread)
+<strong>说明</strong>：本笔记包含了本次调研产生的 4 份原始报告全文，包括综合总结、技术深挖、市场分析及社区生态。</p>
+</blockquote>
+<hr>
+<h2 id="-报告一综合调研总结-summary-report">📄 报告一：综合调研总结 (Summary Report)</h2>
+<p><strong>WorldBox - God Simulator</strong> 是一款由 Maxim Karpenko 独立开发并在过去八年不断进化的像素风“神灵模拟”沙盒游戏。它在商业上通过“移动端免费/内购 + PC端买断”的混合模式取得了巨大成功（Steam 销量估算 200W+，移动端下载 5000W+）。技术上，它通过 Unity 引擎的深度定制（Job System + Burst Compiler）实现了数千个实体的实时自治模拟。其核心竞争力在于极高的自由度、涌现式逻辑（Emergent Gameplay）以及与社区高度紧密的共生关系。</p>
+<h3 id="1-执行摘要-executive-summary">1. 执行摘要 (Executive Summary)</h3>
+<ul>
+<li><strong>神灵能力</strong>：玩家拥有改变地形、投放生物、控制天气、引发自然灾害以及修改生物“特质”（Traits）的能力。</li>
+<li><strong>文明进化</strong>：四种主要种族（人类、精灵、兽人、矮人）拥有各自的文化树，会自主建立王国、进行领土扩张、外交贸易乃至爆发战争。</li>
+<li><strong>涌现式叙事</strong>：玩家不直接控制单位，而是通过环境参数诱发行为。例如，通过修改一个国王的特质为“疯狂”或“野心勃勃”，可以瞬间改变整个大陆的政治格局。</li>
+</ul>
+<h3 id="2-技术实现与性能优化">2. 技术实现与性能优化</h3>
+<p>在 Unity 引擎中处理数千个具有 AI 路径查找和复杂逻辑的单位是一个挑战：</p>
+<ul>
+<li><strong>数据导向设计</strong>：摒弃了传统的 <code>MonoBehaviour</code> 更新模式，采用中心化的模拟循环，并利用 <strong>Unity Job System</strong> 和 <strong>Burst Compiler</strong> 将计算分配给多核 CPU，将 C# 运行速度提升至接近原生 C++ 的水平。</li>
+<li><em><em>层次化路径规划 (HPA</em>)**：将地图划分为多个“区域”（Regions），先进行区域间的路径查找，再进行局部细节路径查找，大幅减少了 A</em> 算法的搜索空间。</li>
+<li><strong>元胞自动机 (CA)</strong>：用于火灾扩散、岩浆流动、生物群落（Biome）扩张等环境模拟。</li>
+</ul>
+<h3 id="3-市场表现与商业模式">3. 市场表现与商业模式</h3>
+<ul>
+<li><strong>Steam 平台</strong>：单价 $19.99，累计销量估算在 <strong>150万至250万套</strong> 之间，历史最高同时在线（CCU）常年保持在 2,000 - 4,000 左右，大版本更新时可冲破 10,000。</li>
+<li><strong>移动端 (Android/iOS)</strong>：下载量突破 5,000万，采用 F2P 模式，通过观看广告临时解锁能力或一次性付费（约 $7.99）解锁全部权限。</li>
+<li><strong>漏斗策略</strong>：移动端作为流量入口，吸引海量轻度玩家，其中硬核玩家最终会流向性能更强、支持创意工坊的 PC 版。</li>
+</ul>
+<h3 id="4-社区与生态">4. 社区与生态</h3>
+<ul>
+<li>从早期的 <strong>NCMS</strong> 到现在的 <strong>NeoModLoader</strong>，社区开发了大量增强插件（如 PowerBox），极大延长了游戏的生命周期。</li>
+<li><strong>反剽窃事件</strong>：2020 年曾遭遇壳公司 (Stavrio Ltd) 的恶意商标抢注和山寨，Maxim 在 Reddit 公开求助，社区爆发了巨大的声援力量，最终法律维权成功。</li>
+</ul>
+<hr>
+<h2 id="-报告二技术深挖-technical-deep-dive">🛠 报告二：技术深挖 (Technical Deep Dive)</h2>
+<h1 id="technical-deep-dive-worldbox---god-simulator">Technical Deep Dive: WorldBox - God Simulator</h1>
+<p>This document provides a technical overview of the implementation strategies used in <strong>WorldBox - God Simulator</strong>, developed by Maxim Karpenko. The analysis focuses on performance optimizations, AI architecture, world generation, and data management within the Unity engine.</p>
+<hr>
+<h2 id="1-unity-engine-optimizations-large-scale-simulation">1. Unity Engine Optimizations (Large-Scale Simulation)</h2>
+<p>Simulating thousands of autonomous entities alongside a dynamic environment requires moving beyond standard Unity workflows.</p>
+<h3 id="data-oriented-simulation"><strong>Data-Oriented Simulation</strong></h3>
+<ul>
+<li><strong>Custom Simulation Loop:</strong> WorldBox avoids the overhead of thousands of <code>MonoBehaviour.Update()</code> calls. Instead, it utilizes a centralized <strong>Manager Pattern</strong> that iterates through flat arrays or lists of unit data.</li>
+<li><strong>C# Job System &#x26; Burst Compiler:</strong> Heavy computations—such as pathfinding, temperature calculations, and biome spreading—are executed across multiple CPU cores using the <strong>Unity Job System</strong>. The <strong>Burst Compiler</strong> is used to compile this C# code into highly optimized native code, providing a near-C++ performance level.</li>
+<li><strong>Object Pooling:</strong> Units, projectiles, and particle effects are aggressively pooled. When a unit “dies,” its object is deactivated and stored in a stack for reuse rather than being destroyed and re-instantiated, significantly reducing Garbage Collector (GC) pressure.</li>
+<li><strong>Rendering Optimizations:</strong>
+<ul>
+<li><strong>GPU Instancing:</strong> Used for rendering thousands of identical sprites (e.g., trees, bushes) in a single draw call.</li>
+<li><strong>UI Batching:</strong> Nameplates and status icons are batched to prevent UI-related performance bottlenecks common in simulation games.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="2-pathfinding-and-ai-logic">2. Pathfinding and AI Logic</h2>
+<p>WorldBox manages pathfinding for thousands of units simultaneously across complex, destructible terrain.</p>
+<h3 id="hierarchical-pathfinding-hpa"><em><em>Hierarchical Pathfinding (HPA</em>)</em>*</h3>
+<ul>
+<li><strong>Region-Based Navigation:</strong> The map is divided into “Regions” (clusters of tiles). The pathfinder first calculates a high-level path between regions and then a low-level path within the specific region. This reduces the search space of the A* algorithm by several orders of magnitude.</li>
+<li><strong>Static Pre-calculation:</strong> Navigation data is pre-calculated per “island” or landmass. When the user modifies the terrain (e.g., creating a bridge or destroying a peninsula), the game triggers a localized re-calculation of regional connections.</li>
+<li><strong>Flow Fields (Potential Lead):</strong> For massive group movements (armies), the game likely uses <strong>Flow Fields</strong> (Vector Fields), where a single pathfinding calculation generates a “force map” that all units in the group follow, rather than each unit calculating its own path.</li>
+</ul>
+<h3 id="ai-behavior-architecture"><strong>AI Behavior Architecture</strong></h3>
+<ul>
+<li><strong>Modular “World Behaviors”:</strong> AI is driven by a library of behaviors (e.g., <code>SettlerBehavior</code>, <code>WarriorBehavior</code>).</li>
+<li><strong>Trait System:</strong> Behaviors are modified by a “Trait” system that applies modifiers to base logic (e.g., the “Madness” trait overrides standard social behavior with aggressive/chaotic states).</li>
+</ul>
+<hr>
+<h2 id="3-world-generation-and-tile-system">3. World Generation and Tile System</h2>
+<p>The world is represented as a high-density grid of tiles that behave both as terrain and as data points for simulation.</p>
+<h3 id="world-generation-algorithms"><strong>World Generation Algorithms</strong></h3>
+<ul>
+<li><strong>Layered Noise (Perlin/Simplex):</strong> Terrain elevation, temperature, and moisture are generated using overlapping layers of noise.</li>
+<li><strong>Masking &#x26; Templates:</strong> Special world shapes (e.g., “Donut”, “Muffin”) are achieved by applying mathematical masks (SDFs - Signed Distance Fields) over the noise-generated terrain.</li>
+<li><strong>Cellular Automata (CA):</strong>
+<ul>
+<li>Used for <strong>environmental simulation</strong>: fire spread, liquid flow (lava/water), and biome expansion.</li>
+<li>Rulesets define how a tile changes based on its neighbors (e.g., if a tile is “Forest” and next to a “Corruption” tile, it has a X% chance to convert per tick).</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="4-savingloading-mechanics">4. Saving/Loading Mechanics</h2>
+<p>Large worlds with millions of data points require an efficient serialization strategy.</p>
+<h3 id="binary-serialization-wbox"><strong>Binary Serialization (.wbox)</strong></h3>
+<ul>
+<li><strong>Custom Binary Format:</strong> WorldBox uses a proprietary binary format rather than JSON or XML to minimize file size and maximize read/write speed.</li>
+<li><strong>State Compression:</strong> The game likely uses <strong>Run-Length Encoding (RLE)</strong> for tile data, as large patches of the map often consist of the same tile type (e.g., Deep Ocean).</li>
+<li><strong>Delta-Loading/Chunking:</strong> Large maps may be saved in chunks, allowing the game to load metadata (world name, population, screenshot) without reading the entire simulation state.</li>
+</ul>
+<h3 id="steam-workshop-integration"><strong>Steam Workshop Integration</strong></h3>
+<ul>
+<li>The transition to Steam necessitated a portable and robust save format that handles versioning, allowing older saves (pre-0.13 tile rework) to be migrated to newer data structures via a “Map Loader” conversion layer.</li>
+</ul>
+<hr>
+<h2 id="summary-table">Summary Table</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="left">Feature</th><th align="left">Implementation Method</th></tr></thead><tbody><tr><td align="left"><strong>Engine</strong></td><td align="left">Unity (Custom Sim Loop)</td></tr><tr><td align="left"><strong>Entity Simulation</strong></td><td align="left">Jobs + Burst (Data-Oriented)</td></tr><tr><td align="left"><strong>Pathfinding</strong></td><td align="left">Hierarchical A* / Region-based</td></tr><tr><td align="left"><strong>World Gen</strong></td><td align="left">Noise Layers + Cellular Automata</td></tr><tr><td align="left"><strong>Save Format</strong></td><td align="left">Proprietary Binary (.wbox)</td></tr><tr><td align="left"><strong>AI</strong></td><td align="left">Modular World Behaviors + Trait Overrides</td></tr></tbody></table>
+<hr>
+<h2 id="-报告三市场分析-market-analysis">📊 报告三：市场分析 (Market Analysis)</h2>
+<h1 id="worldbox-market-analysis--business-performance-february-2026">WorldBox Market Analysis &#x26; Business Performance (February 2026)</h1>
+<h2 id="1-estimated-steam-sales-and-active-player-count">1. Estimated Steam Sales and Active Player Count</h2>
+<ul>
+<li><strong>Total Sales (Steam):</strong> Estimated between <strong>1.5 million and 2.5 million units</strong>. Data from SteamDB and Gamalytic indicates a strong long-tail performance since its Steam release in late 2021.</li>
+<li><strong>Active Player Count:</strong>
+<ul>
+<li><strong>Concurrent Users (CCU):</strong> Consistently maintains between <strong>2,000 and 4,500 players</strong> daily.</li>
+<li><strong>Engagement:</strong> The game sees significant spikes during “Major Updates” (e.g., the Biome update, Culture update), often jumping to 10,000+ CCU.</li>
+</ul>
+</li>
+<li><strong>Revenue (PC):</strong> With a base price of <strong><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>19.99</mn><mo>∗</mo><mo>∗</mo><mo separator="true">,</mo><mi>t</mi><mi>h</mi><mi>e</mi><mi>P</mi><mi>C</mi><mi>v</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>h</mi><mi>a</mi><mi>s</mi><mi>l</mi><mi>i</mi><mi>k</mi><mi>e</mi><mi>l</mi><mi>y</mi><mi>g</mi><mi>e</mi><mi>n</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>e</mi><mi>d</mi><mi>g</mi><mi>r</mi><mi>o</mi><mi>s</mi><mi>s</mi><mi>r</mi><mi>e</mi><mi>v</mi><mi>e</mi><mi>n</mi><mi>u</mi><mi>e</mi><mi>i</mi><mi>n</mi><mi>e</mi><mi>x</mi><mi>c</mi><mi>e</mi><mi>s</mi><mi>s</mi><mi>o</mi><mi>f</mi><mo>∗</mo><mo>∗</mo></mrow><annotation encoding="application/x-tex">19.99**, the PC version has likely generated gross revenue in excess of **</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">19.99</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">∗</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">t</span><span class="mord mathnormal">h</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.07153em;">PC</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">ers</span><span class="mord mathnormal">i</span><span class="mord mathnormal">o</span><span class="mord mathnormal">nha</span><span class="mord mathnormal">s</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal" style="margin-right:0.03148em;">ik</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord mathnormal" style="margin-right:0.02778em;">er</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span><span class="mord mathnormal">d</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">rossre</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord mathnormal">u</span><span class="mord mathnormal">e</span><span class="mord mathnormal">in</span><span class="mord mathnormal">e</span><span class="mord mathnormal">x</span><span class="mord mathnormal">cesso</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4653em;"></span><span class="mord">∗</span></span></span></span>30M - $40M</strong> (before Valve’s 30% cut and regional pricing adjustments).</li>
+</ul>
+<h2 id="2-mobile-f2piap-vs-pc-premium-model-comparison">2. Mobile (F2P/IAP) vs. PC (Premium) Model Comparison</h2>
+<p>WorldBox operates a highly successful hybrid distribution model that leverages the strengths of both platforms.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="left">Feature</th><th align="left">Mobile (Android/iOS)</th><th align="left">PC (Steam/Humble)</th></tr></thead><tbody><tr><td align="left"><strong>Monetization</strong></td><td align="left"><strong>Freemium:</strong> Free to play basic version; one-time “Premium” IAP (~$7.99) to unlock all powers.</td><td align="left"><strong>Premium:</strong> One-time purchase ($19.99).</td></tr><tr><td align="left"><strong>Reach</strong></td><td align="left"><strong>Massive:</strong> 50M+ downloads on Android alone.</td><td align="left"><strong>Niche/Quality:</strong> Focused on power users and map creators.</td></tr><tr><td align="left"><strong>Performance</strong></td><td align="left">Limited by mobile hardware (smaller world sizes).</td><td align="left"><strong>Iceberg-sized worlds</strong>, better CPU optimization.</td></tr><tr><td align="left"><strong>Content</strong></td><td align="left">Temporary power unlocks via Ads (rewarded video).</td><td align="left">Full access, <strong>Steam Workshop</strong> support for mods/maps.</td></tr></tbody></table>
+<p><strong>Key Insight:</strong> The mobile version acts as a massive “top-of-funnel” marketing tool. Millions play the free version, and many eventually “graduate” to the PC version for a more stable, moddable, and high-performance experience.</p>
+<h2 id="3-competitive-landscape">3. Competitive Landscape</h2>
+<p>WorldBox dominates the “God Simulator” niche by focusing on simulation depth over directed gameplay.</p>
+<ul>
+<li><strong>Godus (22Cans):</strong> Largely considered “abandoned” and a failure in community management. WorldBox captured the disillusioned Godus audience by providing a true sandbox without heavy-handed microtransactions.</li>
+<li><strong>Galimulator:</strong> A strong competitor in “high-level simulation,” but focuses on space/political borders rather than the pixel-art biological simulation of WorldBox.</li>
+<li><strong>Reus / Reus 2:</strong> More “game-ified” with specific objectives and puzzles. WorldBox remains the preferred choice for players who want pure “chaos experimentation.”</li>
+<li><strong>Galactory:</strong> A notable mobile competitor that is often criticized by the community for being a “clone.” Despite this, it holds a small segment of the mobile market.</li>
+</ul>
+<h2 id="4-marketing-strategy-and-viral-growth-factors">4. Marketing Strategy and Viral Growth Factors</h2>
+<p>WorldBox’s growth is a case study in <strong>Organic Community Virality</strong>:</p>
+<ul>
+<li><strong>The “Lone Developer” Narrative:</strong> Maxim Karpenko’s direct engagement with the community (Reddit/Discord) creates a “human connection” that large studios lack. The community feels protective of the game.</li>
+<li><strong>YouTube Ecosystem:</strong> The game’s chaotic nature makes it “stream-bait.” Influencers like <em>GrayStillPlays</em> and <em>The Spiffing Brit</em> helped drive millions of views by testing the game’s limits (e.g., “Can 1,000 bears survive a volcano?”).</li>
+<li><strong>TikTok/Shorts:</strong> The visual satisfaction of watching a “Grey Goo” or “Antimatter Bomb” erase a civilization is perfect for short-form video content.</li>
+<li><strong>Deep Lore &#x26; Memes:</strong> The community creates its own narratives (e.g., the “cult of the boat,” the “crabzilla” memes), which keeps engagement high between updates.</li>
+<li><strong>No Aggressive Marketing:</strong> WorldBox relies almost entirely on word-of-mouth and organic search rankings, maintaining a high ROAS (Return on Ad Spend) by essentially spending $0 on traditional paid acquisition.</li>
+</ul>
+<hr>
+<h2 id="-报告四社区生态-community--modding">🌐 报告四：社区生态 (Community &#x26; Modding)</h2>
+<h1 id="worldbox---god-simulator-community-and-modding-ecosystem-research-summary">WorldBox - God Simulator: Community and Modding Ecosystem Research Summary</h1>
+<h2 id="1-key-platforms">1. Key Platforms</h2>
+<p>The WorldBox community is decentralized across three main hubs, each serving a distinct purpose:</p>
+<ul>
+<li><strong>Discord (Official):</strong> The primary engine of the community. It is the central hub for real-time announcements, bug reports, and crucially, the <strong>modding scene</strong>. Most complex mods (which require code modification) are distributed here via dedicated channels.</li>
+<li><strong>Reddit (r/Worldbox):</strong> With over 150k members, the subreddit is the heart of community culture. It is dominated by memes (often about waiting for updates), fan art, “what should I do with this world” prompts, and feature suggestions.</li>
+<li><strong>Steam Workshop:</strong> Primarily used for <strong>User-Generated Maps</strong>. Due to the game’s architecture, the Steam Workshop does not natively support “code mods” (new mechanics or items). Instead, it serves as a massive library of creative world designs, ranging from realistic Earth replicas to fantasy continents.</li>
+</ul>
+<h2 id="2-history-of-modding-tools-ncms-to-neomodloader">2. History of Modding Tools (NCMS to NeoModLoader)</h2>
+<p>Modding in WorldBox has evolved significantly from manual file manipulation to sophisticated loaders:</p>
+<ul>
+<li><strong>NCMS (Native Code Modding System):</strong> Created by the modder <em>Nikon</em>, NCMS was the gold standard for several years. It allowed players to run C# mods without recompiling the game. It revolutionized the game by enabling complex mods like <em>PowerBox</em>.</li>
+<li><strong>NeoModLoader (NML):</strong> The current successor to NCMS. As the game updated, NCMS became increasingly unstable. NML was developed to provide a more modern, efficient, and feature-rich environment for modders. Most active modders have now transitioned to NML.</li>
+<li><strong>External Repositories:</strong> While Discord is the hub, platforms like <strong>GameBanana</strong>, <strong>Nexus Mods</strong>, and <strong>CurseForge</strong> host permanent archives of popular mods.</li>
+</ul>
+<h2 id="3-player-generated-content-trends">3. Player-Generated Content Trends</h2>
+<p>The community’s creativity manifests in several “meta” trends:</p>
+<ul>
+<li><strong>Hyper-Realistic Maps:</strong> Map-making has reached an artistic peak. Players use external tools or extreme patience to create pixel-perfect versions of Earth, specific countries (e.g., “USA 1000-year evolution”), or Middle-earth.</li>
+<li><strong>Simulation Scenarios:</strong> A popular trend (highly visible on YouTube and TikTok) involves running long-term simulations (e.g., “100 Nations, 5000 Years”) to see which kingdom survives. This has led to a focus on “storytelling” within the community.</li>
+<li><strong>Trait Editing &#x26; “Super-Soldiers”:</strong> Using mods or the “debug menu,” players enjoy creating individual units with dozens of positive traits to see how they affect world history.</li>
+<li><strong>Popular Mod Categories:</strong>
+<ul>
+<li><strong>PowerBox:</strong> Adds dozens of new God powers.</li>
+<li><strong>Modern Warfare:</strong> Introduces guns, tanks, and nuclear mechanics beyond the vanilla fantasy setting.</li>
+<li><strong>Species Expansions:</strong> Adds new races or deeper mechanics to existing ones (Humans, Elves, Orcs, Dwarves).</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-relationship-with-developer-maxim-karpenko">4. Relationship with Developer (Maxim Karpenko)</h2>
+<p>The relationship between the creator (Maxim, known as <em>Mixamko</em>) and the community is uniquely collaborative and humorous:</p>
+<ul>
+<li><strong>Direct Interaction:</strong> Maxim and his small team are active on Discord and X (Twitter), often posting “sneaks” (vague screenshots of upcoming features) that the community obsessively deconstructs.</li>
+<li><strong>Community-Driven Features:</strong> Maxim frequently polls the community or implements ideas from the “Suggestions” channels. The mysterious “Monolith” object, for instance, was a community-voted feature that remained a mystery for months.</li>
+<li><strong>The “Wait” Culture:</strong> Because updates are massive but infrequent (often 6-12 months apart), a unique meme culture has developed. The community alternates between “sacrificing” Elves to the volcano to “speed up” the update and expressing deep respect for the developer’s commitment to quality over speed.</li>
+<li><strong>Stance on Modding:</strong> While there is no official Steam Workshop support for code mods yet, the developers have historically been supportive of the modding scene, occasionally fixing bugs that break mod loaders.</li>
+</ul>
+<hr>
+<p><em>本报告合集由面包 (Bread) 整理。</em></p>
