@@ -53,6 +53,7 @@ export default defineConfig({
         {
           text: '📝 综合笔记',
           items: [
+            { text: 'Superpowers Skills 完整攻略', link: '/notes/superpowers-skills-guide' },
             { text: 'Incremental Games 品类调研', link: '/notes/incremental-games-research-2026' },
             { text: 'Paddle Paddle Paddle 独立游戏拆解', link: '/notes/paddle-paddle-paddle-analysis' },
             { text: 'WorldBox 调研报告', link: '/notes/worldbox-research-collect-info-async' },

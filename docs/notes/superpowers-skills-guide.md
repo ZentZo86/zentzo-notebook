@@ -1,45 +1,8 @@
----
-layout: ../../layouts/NoteLayout.astro
-title: "Superpowers Skills 完整攻略"
-date: 2026-02-05
-category: AI研究
-tags: [AI, Agent, Superpowers, Workflow]
-excerpt: "全面解析 AI Agent 的 14 个超能力技能，涵盖头脑风暴、系统性调试、TDD 等核心流程。"
----
-
 # Superpowers Skills 完整攻略
 
 > 来源：[obra/superpowers](https://github.com/obra/superpowers)
 > 安装日期：2026-02-05
-> 共计 14 个 Skills，已安装 6 个
-
----
-
-## 目录
-1. [快速参考表](#快速参考表)
-2. [已安装 Skills（6个）](#第一章已安装-skills)
-   - [brainstorming](#1-brainstorming头脑风暴)
-   - [systematic-debugging](#2-systematic-debugging系统性调试)
-   - [receiving-code-review](#3-receiving-code-review接收代码审查)
-   - [using-git-worktrees](#4-using-git-worktrees使用-git-worktrees)
-   - [finishing-a-development-branch](#5-finishing-a-development-branch完成开发分支)
-   - [writing-skills](#6-writing-skills编写-skills)
-3. [未安装 Skills（8个）](#第二章未安装-skills)
-   - [计划与执行类](#21-计划与执行类)
-     - [writing-plans](#writing-plans编写计划)
-     - [executing-plans](#executing-plans执行计划)
-   - [开发方法类](#22-开发方法类)
-     - [test-driven-development](#test-driven-developmenttdd)
-     - [verification-before-completion](#verification-before-completion完成前验证)
-   - [协作类](#23-协作类)
-     - [subagent-driven-development](#subagent-driven-development子代理驱动开发)
-     - [dispatching-parallel-agents](#dispatching-parallel-agents并行代理调度)
-     - [requesting-code-review](#requesting-code-review请求代码审查)
-   - [元技能](#24-元技能)
-     - [using-superpowers](#using-superpowers使用-superpowers)
-4. [完整工作流程图](#第三章完整工作流程图)
-5. [与 OpenCode 的对应关系](#第四章与-opencode-的对应关系)
-6. [附录：安装与命令](#附录)
+> 共计 14 个 Skills，已安装 11 个
 
 ---
 
@@ -54,17 +17,17 @@ excerpt: "全面解析 AI Agent 的 14 个超能力技能，涵盖头脑风暴�
 | using-git-worktrees | `/using-git-worktrees` | 用 Git worktrees 隔离开发环境 | 工具 |
 | finishing-a-development-branch | `/finishing-a-development-branch` | 分支开发完成后的标准收尾流程 | 流程 |
 | writing-skills | `/writing-skills` | 如何写好 AI Agent Skills（元指南）| 元技能 |
+| writing-plans | (自动匹配) | 写详细实施计划，假设执行者零上下文 | 流程 |
+| test-driven-development | (自动匹配) | RED-GREEN-REFACTOR，铁律无例外 | 方法论 |
+| executing-plans | (自动匹配) | 加载计划，分批执行，每批后报告 | 流程 |
+| subagent-driven-development | (自动匹配) | 每任务一个子代理，两阶段 review | 协作 |
+| requesting-code-review | (自动匹配) | 完成任务后调度 code-reviewer 子代理 | 协作 |
 
-### 未安装 Skills
+### 未安装 Skills (由于功能重叠或不适用)
 | Skill | 一句话描述 | 类型 | 与 OpenCode 重叠度 |
 |-------|-----------|------|-------------------|
-| writing-plans | 写详细实施计划，假设执行者零上下文 | 流程 | 低 - 可安装 |
-| executing-plans | 加载计划，分批执行，每批后报告 | 流程 | 中 - OpenCode 有 todo |
-| test-driven-development | RED-GREEN-REFACTOR，铁律无例外 | 方法论 | 低 - 可安装 |
 | verification-before-completion | 没有验证证据就不能声称完成 | 方法论 | 高 - OpenCode 已内置 |
-| subagent-driven-development | 每任务一个子代理，两阶段 review | 协作 | 高 - OpenCode 有 delegate_task |
 | dispatching-parallel-agents | 多独立任务并行调度代理 | 协作 | 高 - OpenCode 已内置 |
-| requesting-code-review | 完成任务后调度 code-reviewer 子代理 | 协作 | 中 - OpenCode 有 code-reviewer |
 | using-superpowers | 任何对话开始时检查是否有 skill 适用 | 元技能 | 高 - OpenCode 已内置 |
 
 ---
@@ -442,500 +405,31 @@ description: Use when executing implementation plans with independent tasks in t
 
 ---
 
-## 第二章：未安装 Skills
-> 以下 Skills 尚未安装。每个 Skill 后面附有安装命令和与 OpenCode 的对比分析。
+## 第二章：其他重要技能
 
 ### 2.1 计划与执行类
 
 #### writing-plans（编写计划）
 **是什么**：写详细的实施计划，假设执行者对代码库零上下文、品味可疑。
 **核心理念**：计划要详细到"按部就班就能完成"的程度。
-**什么时候用**：
-- 有规格或需求的多步骤任务
-- 在写任何代码之前
-- brainstorming 完成后
-
-**计划文档头部（必须）**：
-```markdown
-# [Feature Name] Implementation Plan
-> **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
-
-**Goal:** [一句话描述这构建什么]
-**Architecture:** [2-3 句关于方法]
-**Tech Stack:** [关键技术/库]
----
-```
-
-**任务粒度（每步一个动作，2-5分钟）**：
-- "Write the failing test" — 一步
-- "Run it to make sure it fails" — 一步
-- "Implement the minimal code to make the test pass" — 一步
-- "Run the tests and make sure they pass" — 一步
-- "Commit" — 一步
-
-**任务结构模板**：
-```markdown
-### Task N: [Component Name]
-**Files:**
-- Create: `exact/path/to/file.py`
-- Modify: `exact/path/to/existing.py:123-145`
-- Test: `tests/exact/path/to/test.py`
-
-**Step 1: Write the failing test**
-[完整代码]
-
-**Step 2: Run test to verify it fails**
-Run: `pytest tests/path/test.py::test_name -v`
-Expected: FAIL with "function not defined"
-
-**Step 3: Write minimal implementation**
-[完整代码]
-
-**Step 4: Run test to verify it passes**
-Run: `pytest tests/path/test.py::test_name -v`
-Expected: PASS
-
-**Step 5: Commit**
-```bash
-git add tests/path/test.py src/path/file.py
-git commit -m "feat: add specific feature"
-```
-```
-
-**执行交接**：
-计划完成后，提供两个选项：
-1. **Subagent-Driven（当前会话）** — 每任务一个子代理，任务间 review
-2. **Parallel Session（新会话）** — 在新会话用 executing-plans 批量执行
-
-**与 OpenCode 对比**：
-| 方面 | Superpowers | OpenCode |
-|------|-------------|----------|
-| 计划格式 | 标准化模板 | 无特定格式 |
-| 任务粒度 | 强制 2-5 分钟一步 | 无强制 |
-| TDD 集成 | 每步包含测试 | 可选 |
-
-**安装命令**：
-```bash
-# 手动安装
-curl -o ~/.agents/skills/writing-plans/SKILL.md \
-https://raw.githubusercontent.com/obra/superpowers/main/skills/writing-plans/SKILL.md
-```
-
----
 
 #### executing-plans（执行计划）
 **是什么**：加载计划文件，批量执行任务，每批后报告等待反馈。
 **核心理念**：批量执行 + 检查点 = 质量保障。
-**什么时候用**：
-- 有写好的实施计划
-- 在新会话中执行（非当前会话）
-
-**流程**：
-```
-Step 1: Load and Review Plan
-- 读取计划文件
-- 批判性审查 — 有问题先提出
-- 如无问题 → 创建 TodoWrite
-
-Step 2: Execute Batch
-- 默认每批 3 个任务
-- 每个任务：标记 in_progress → 执行 → 验证 → 标记 completed
-
-Step 3: Report
-- 显示实现内容
-- 显示验证输出
-- 说："Ready for feedback."
-
-Step 4: Continue
-- 根据反馈调整
-- 执行下一批
-- 重复直到完成
-
-Step 5: Complete Development
-- 使用 finishing-a-development-branch skill
-```
-
-**何时停下询问**：
-- 遇到阻塞（缺少依赖、测试失败、指令不清）
-- 计划有关键缺口
-- 不理解某个指令
-- 验证反复失败
-
-**与 OpenCode 对比**：
-| 方面 | Superpowers | OpenCode |
-|------|-------------|----------|
-| 任务跟踪 | TodoWrite | todowrite 工具 ✓ |
-| 批量执行 | 每批 3 个 | 无批量概念 |
-| 检查点 | 每批后停下 | 无强制检查点 |
-
-**结论**：OpenCode 已有 todo 机制，但无批量检查点概念。如需严格控制，可安装。
-
----
 
 ### 2.2 开发方法类
 
 #### test-driven-development（TDD）
 **是什么**：先写测试，看它失败，再写最小代码让它通过。
-**核心理念**：**如果没看到测试失败，就不知道它是否测对了东西。**
-**铁律**：
-```
-没有先写失败测试，就不能写生产代码
-```
-先写了代码？**删掉**。重新开始。不能：
-- 保留作为"参考"
-- "适配"它来写测试
-- 看着它写测试
-- 删除意味着删除
-
-**RED-GREEN-REFACTOR 循环**：
-```
-RED → 写失败测试 → 验证失败
- ↓
-GREEN → 写最小代码 → 验证通过
- ↓
-REFACTOR → 清理代码 → 保持测试绿色
- ↓
-重复
-```
-
-**RED（写失败测试）**：
-```typescript
-// ✅ Good: 清晰命名，测真实行为，一件事
-test('retries failed operations 3 times', async () => {
-  let attempts = 0;
-  const operation = () => {
-    attempts++;
-    if (attempts < 3) throw new Error('fail');
-    return 'success';
-  };
-  const result = await retryOperation(operation);
-  expect(result).toBe('success');
-  expect(attempts).toBe(3);
-});
-
-// ❌ Bad: 模糊命名，测 mock 不测代码
-test('retry works', async () => {
-  const mock = jest.fn()
-    .mockRejectedValueOnce(new Error())
-    .mockResolvedValueOnce('success');
-  await retryOperation(mock);
-  expect(mock).toHaveBeenCalledTimes(2);
-});
-```
-
-**验证 RED（必须）**：
-```bash
-npm test path/to/test.test.ts
-```
-- 测试失败（不是 error）
-- 失败信息符合预期
-- 因为功能缺失而失败（不是拼写错误）
-
-**GREEN（最小代码）**：
-```typescript
-// ✅ Good: 刚好够通过
-async function retryOperation<T>(fn: () => Promise<T>): Promise<T> {
-  for (let i = 0; i < 3; i++) {
-    try {
-      return await fn();
-    } catch (e) {
-      if (i === 2) throw e;
-    }
-  }
-  throw new Error('unreachable');
-}
-
-// ❌ Bad: 过度工程
-async function retryOperation<T>(
-  fn: () => Promise<T>,
-  options?: {
-    maxRetries?: number;
-    backoff?: 'linear' | 'exponential';
-    onRetry?: (attempt: number) => void;
-  }
-): Promise<T> {
-  // YAGNI
-}
-```
-
-**常见合理化（全都是借口）**：
-| 借口 | 现实 |
-|------|------|
-| "太简单不需要测试" | 简单代码也会坏。测试只要 30 秒。|
-| "我之后再测试" | 立即通过的测试什么都不证明。|
-| "已经手动测过了" | 临时测试 ≠ 系统测试。无记录、不可重跑。|
-| "删掉 X 小时的工作太浪费" | 沉没成本谬误。保留未验证的代码才是技术债。|
-| "保留作为参考" | 你会适配它。那就是后写测试。删除意味着删除。|
-| "TDD 会拖慢我" | TDD 比调试快。务实 = 先写测试。|
-
-**红旗 — 停下重来**：
-- 先写代码再测试
-- 测试立即通过
-- 无法解释测试为何失败
-- "就这一次"的合理化
-- "我已经手动测过了"
-- "事后测试达到同样目的"
-- "保留作为参考"
-
-**与 OpenCode 对比**：
-| 方面 | Superpowers | OpenCode |
-|------|-------------|----------|
-| TDD 强制 | 铁律，无例外 | 无强制 |
-| 合理化阻断 | 详细列表 | 无 |
-| 验证检查表 | 8 项 | 无 |
-
-**结论**：OpenCode 不强制 TDD。如需纪律，**推荐安装**。
-
-**安装命令**：
-```bash
-curl -o ~/.agents/skills/test-driven-development/SKILL.md \
-https://raw.githubusercontent.com/obra/superpowers/main/skills/test-driven-development/SKILL.md
-```
-
----
-
-#### verification-before-completion（完成前验证）
-**是什么**：声称工作完成而不验证是不诚实，不是效率。
-**铁律**：
-```
-没有新鲜的验证证据，就不能声称完成
-```
-如果这条消息里没跑过验证命令，就不能声称它通过。
-
-**门控函数**：
-```
-声称任何状态或表达满意之前：
-1. IDENTIFY: 什么命令证明这个声称？
-2. RUN: 执行完整命令（新鲜的、完整的）
-3. READ: 完整输出，检查退出码，数失败数
-4. VERIFY: 输出确认声称吗？
-   - 否：陈述实际状态 + 证据
-   - 是：陈述声称 + 证据
-5. ONLY THEN: 做出声称
-```
-
-**常见失败**：
-| 声称 | 需要 | 不够 |
-|------|------|------|
-| 测试通过 | 测试命令输出：0 failures | 之前的运行、"应该通过" |
-| Linter clean | Linter 输出：0 errors | 部分检查、推断 |
-| Build 成功 | Build 命令：exit 0 | Linter 通过、日志看起来好 |
-| Bug 修复 | 测试原始症状：通过 | 代码改了、假设修好了 |
-| Agent 完成 | VCS diff 显示改动 | Agent 报告"成功" |
-
-**红旗 — 停下**：
-- 使用"应该"、"大概"、"似乎"
-- 验证前表达满意（"太棒了！"、"完美！"、"搞定！"）
-- 准备 commit/push/PR 但没验证
-- 相信 agent 成功报告
-- 依赖部分验证
-- "就这一次"
-- 累了想结束
-
-**与 OpenCode 对比**：
-| 方面 | Superpowers | OpenCode |
-|------|-------------|----------|
-| 验证强制 | 铁律 | ✅ 已内置 lsp_diagnostics |
-| 合理化阻断 | 详细列表 | 已有 |
-| 证据要求 | 必须引用输出 | ✅ 已有 |
-
-**结论**：OpenCode 已内置类似机制（Phase 2B 的 Evidence Requirements）。**不需要安装**。
-
----
+**铁律**：**没有先写失败测试，就不能写生产代码。**
 
 ### 2.3 协作类
 
 #### subagent-driven-development（子代理驱动开发）
 **是什么**：每任务派发一个新子代理，两阶段 review（规格符合 + 代码质量）。
-**核心理念**：新子代理每任务 + 两阶段 review = 高质量、快迭代
-
-**流程**：
-```
-读取计划 → 提取所有任务 → 创建 TodoWrite
- ↓
-┌───────────────────┐
-│   Per Task Loop   │
-│                   │
-│ 1. Dispatch 实现者 │
-│ 2. 实现者提问？    │
-│    → 回答 → 继续   │
-│ 3. 实现、测试、提交│
-│ 4. Dispatch 规格审查│
-│    → 不符合？修复   │
-│ 5. Dispatch 质量审查│
-│    → 有问题？修复   │
-│ 6. 标记完成       │
-└───────────────────┘
- ↓
-最终 code review
- ↓
-finishing-a-development-branch
-```
-
-**三个 Prompt 模板**：
-- `implementer-prompt.md` — 实现者子代理
-- `spec-reviewer-prompt.md` — 规格符合审查
-- `code-quality-reviewer-prompt.md` — 代码质量审查
-
-**红旗**：
-- 在 main/master 上开始实现
-- 跳过任何一个 review
-- 带着未修复的问题继续
-- 并行派发多个实现者（会冲突）
-- 让子代理读计划文件（应该提供全文）
-- **质量 review 在规格 review 之前开始**（顺序错了）
-
-**与 OpenCode 对比**：
-| 方面 | Superpowers | OpenCode |
-|------|-------------|----------|
-| 子代理派发 | Task tool | ✅ delegate_task |
-| 两阶段 review | 规格 → 质量 | ✅ superpowers:code-reviewer |
-| Session 继续 | 有 | ✅ session_id |
-
-**结论**：OpenCode 的 `delegate_task` + `session_id` 已实现核心功能。**不需要安装**。
-
----
-
-#### dispatching-parallel-agents（并行代理调度）
-**是什么**：多个不相关的任务，并行派发代理处理。
-**什么时候用**：
-- 3+ 个测试文件失败，各有不同根因
-- 多个子系统的独立故障
-- 每个问题可以独立理解
-- 调查之间无共享状态
-
-**什么时候不用**：
-- 失败相关（修一个可能修好其他）
-- 需要完整系统上下文
-- 代理会互相干扰（编辑同一文件）
-
-**模式**：
-```
-1. 识别独立领域
-   - File A tests: Tool approval flow
-   - File B tests: Batch completion
-   - File C tests: Abort functionality
-
-2. 创建聚焦的代理任务
-   - 每个代理：具体范围 + 清晰目标 + 约束 + 期望输出
-
-3. 并行派发
-   Task("Fix agent-tool-abort.test.ts failures")
-   Task("Fix batch-completion-behavior.test.ts failures")
-   Task("Fix tool-approval-race-conditions.test.ts failures")
-
-4. Review 和集成
-   - 读取每个摘要
-   - 验证修复不冲突
-   - 跑完整测试套件
-```
-
-**与 OpenCode 对比**：
-| 方面 | Superpowers | OpenCode |
-|------|-------------|----------|
-| 并行派发 | Task tool | ✅ delegate_task(run_in_background=true) |
-| 收集结果 | 等待返回 | ✅ background_output |
-| 取消任务 | - | ✅ background_cancel |
-
-**结论**：OpenCode 已内置并行代理功能。**不需要安装**。
-
----
 
 #### requesting-code-review（请求代码审查）
 **是什么**：完成任务后调度 code-reviewer 子代理，在问题扩散前捕获。
-**什么时候用**：
-**必须**：
-- subagent-driven development 中每个任务后
-- 完成主要功能后
-- 合并到 main 前
-
-**可选但有价值**：
-- 卡住时（新视角）
-- 重构前（基线检查）
-- 修复复杂 bug 后
-
-**如何请求**：
-```bash
-# 1. 获取 git SHAs
-BASE_SHA=$(git rev-parse HEAD~1) # or origin/main
-HEAD_SHA=$(git rev-parse HEAD)
-
-# 2. 派发 code-reviewer 子代理
-# 填写模板：
-# - {WHAT_WAS_IMPLEMENTED}
-# - {PLAN_OR_REQUIREMENTS}
-# - {BASE_SHA}
-# - {HEAD_SHA}
-# - {DESCRIPTION}
-
-# 3. 根据反馈行动
-# - Critical: 立即修
-# - Important: 继续前修
-# - Minor: 记录稍后处理
-```
-
-**与 OpenCode 对比**：
-| 方面 | Superpowers | OpenCode |
-|------|-------------|----------|
-| Code reviewer | Task tool + 模板 | ✅ superpowers:code-reviewer agent |
-| 反馈处理 | 手动 | 手动 |
-
-**结论**：OpenCode 已有 code-reviewer agent。**不需要安装**。
-
----
-
-### 2.4 元技能
-
-#### using-superpowers（使用 Superpowers）
-**是什么**：任何对话开始时检查是否有 skill 适用。
-**铁律**：
-```
-如果你认为有 1% 的概率某个 skill 可能适用，
-你必须绝对调用那个 skill。
-
-如果一个 skill 适用于你的任务，你没有选择。你必须使用它。
-这不是商量。这不是可选的。你不能合理化逃避这个。
-```
-
-**流程**：
-```
-用户消息收到
- ↓
-可能有 skill 适用吗？
- ↓
-yes (哪怕 1%) 调用 Skill 工具
- ↓
-宣布："Using [skill] to [purpose]"
- ↓
-有检查表吗？
- ↓
-yes 创建 TodoWrite（每项一个 todo）
- ↓
-严格遵循 skill
-```
-
-**红旗 — 你在合理化**：
-| 想法 | 现实 |
-|------|------|
-| "这只是个简单问题" | 问题是任务。检查 skills。|
-| "我需要先获取更多上下文" | Skill 检查在澄清问题之前。|
-| "让我先探索代码库" | Skills 告诉你如何探索。先检查。|
-| "这不需要正式的 skill" | 如果 skill 存在，使用它。|
-| "我记得这个 skill" | Skills 会演变。读当前版本。|
-| "先做这一件事" | 做任何事之前先检查。|
-
-**Skill 优先级**：
-1. **流程 skills 先**（brainstorming, debugging）— 决定如何处理任务
-2. **实现 skills 后**（frontend-design, mcp-builder）— 指导执行
-
-**与 OpenCode 对比**：
-| 方面 | Superpowers | OpenCode |
-|------|-------------|----------|
-| Skill 检查 | 每次对话开始 | ✅ 已内置（Skill 匹配） |
-| 强制调用 | 铁律 | ✅ skill 工具自动匹配 |
-| 优先级 | 流程 → 实现 | 已有 |
-
-**结论**：OpenCode 已内置 skill 匹配机制。**不需要安装**。
 
 ---
 
@@ -953,7 +447,7 @@ yes 创建 TodoWrite（每项一个 todo）
     设计确认
     ▼
 ┌─────────────────────────┐
-│     writing-plans       │ ← 写详细计划（可选安装）
+│     writing-plans       │ ← 写详细计划
 └────────────┬────────────┘
     │
     ▼
@@ -967,7 +461,7 @@ yes 创建 TodoWrite（每项一个 todo）
 └──────┬───────┘
     │
 ┌────────────┴────────────┐
-│ test-driven-development │ ← TDD 循环（可选安装）
+│ test-driven-development │ ← TDD 循环
 │ RED → GREEN → REFACTOR  │
 └────────────┬────────────┘
     │
@@ -993,50 +487,9 @@ yes 创建 TodoWrite（每项一个 todo）
 └─────────────────────────────────────┘
 ```
 
-### Skills 之间的依赖关系
-```
-using-superpowers（元技能 - 入口）
-    │
-    ├─→ brainstorming（流程 - 设计）
-    │       │
-    │       └─→ writing-plans（流程 - 计划）
-    │               │
-    │               ├─→ executing-plans（流程 - 执行）
-    │               │       │
-    │               │       └─→ finishing-a-development-branch
-    │               │
-    │               └─→ subagent-driven-development
-    │                       │
-    │                       ├─→ test-driven-development
-    │                       ├─→ requesting-code-review
-    │                       └─→ finishing-a-development-branch
-    │
-    ├─→ systematic-debugging（流程 - 调试）
-    ├─→ using-git-worktrees（工具）
-    └─→ writing-skills（元技能 - 扩展）
-```
-
 ---
 
 ## 第四章：与 OpenCode 的对应关系
-
-### 已内置 vs 需安装
-| Superpowers Skill | OpenCode 对应 | 状态 |
-|-------------------|---------------|------|
-| brainstorming | 无直接对应 | ✅ 已安装 |
-| systematic-debugging | 无直接对应 | ✅ 已安装 |
-| receiving-code-review | 无直接对应 | ✅ 已安装 |
-| using-git-worktrees | 无直接对应 | ✅ 已安装 |
-| finishing-a-development-branch | 无直接对应 | ✅ 已安装 |
-| writing-skills | 无直接对应 | ✅ 已安装 |
-| writing-plans | 无直接对应 | 📦 可安装 |
-| test-driven-development | 无直接对应 | 📦 推荐安装 |
-| executing-plans | todowrite 工具 | ⚠️ 有重叠 |
-| verification-before-completion | lsp_diagnostics + Evidence Requirements | ❌ 已内置 |
-| subagent-driven-development | delegate_task + session_id | ❌ 已内置 |
-| dispatching-parallel-agents | delegate_task(run_in_background=true) | ❌ 已内置 |
-| requesting-code-review | superpowers:code-reviewer agent | ❌ 已内置 |
-| using-superpowers | Skill 工具自动匹配 | ❌ 已内置 |
 
 ### 工具对照表
 | Superpowers 概念 | OpenCode 工具 |
@@ -1048,55 +501,11 @@ using-superpowers（元技能 - 入口）
 | Edit file | `edit` |
 | WebFetch | `webfetch` |
 | 子代理 | `delegate_task(category=..., load_skills=[...])` |
-| 并行代理 | `delegate_task(run_in_background=true)` |
-| 代理结果 | `background_output(task_id=...)` |
 | Session 继续 | `session_id` 参数 |
 
 ---
 
 ## 附录
-
-### 安装命令
-**已安装 Skills（6个）位置**：
-```
-~/.agents/skills/
-├── brainstorming/SKILL.md
-├── finishing-a-development-branch/SKILL.md
-├── receiving-code-review/SKILL.md
-├── systematic-debugging/SKILL.md
-├── using-git-worktrees/SKILL.md
-└── writing-skills/SKILL.md
-```
-
-**推荐安装（2个）**：
-```bash
-# test-driven-development（强烈推荐）
-mkdir -p ~/.agents/skills/test-driven-development
-curl -o ~/.agents/skills/test-driven-development/SKILL.md \
-https://raw.githubusercontent.com/obra/superpowers/main/skills/test-driven-development/SKILL.md
-
-# writing-plans（推荐）
-mkdir -p ~/.agents/skills/writing-plans
-curl -o ~/.agents/skills/writing-plans/SKILL.md \
-https://raw.githubusercontent.com/obra/superpowers/main/skills/writing-plans/SKILL.md
-```
-
-**可选安装（1个）**：
-```bash
-# executing-plans（如需批量检查点）
-mkdir -p ~/.agents/skills/executing-plans
-curl -o ~/.agents/skills/executing-plans/SKILL.md \
-https://raw.githubusercontent.com/obra/superpowers/main/skills/executing-plans/SKILL.md
-```
-
-### 查看已安装 Skills
-```bash
-# 列出目录
-ls ~/.agents/skills/
-
-# 查看单个 skill
-cat ~/.agents/skills/brainstorming/SKILL.md
-```
 
 ### 触发 Skills
 在 OpenCode 中直接使用斜杠命令：
@@ -1109,10 +518,3 @@ cat ~/.agents/skills/brainstorming/SKILL.md
 
 ### 来源与更新
 **Skills 仓库**：https://github.com/obra/superpowers
-
-**更新 Skills**：
-```bash
-# 重新下载最新版本
-curl -o ~/.agents/skills/<skill-name>/SKILL.md \
-https://raw.githubusercontent.com/obra/superpowers/main/skills/<skill-name>/SKILL.md
-```
