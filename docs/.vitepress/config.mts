@@ -29,7 +29,9 @@ export default defineConfig({
             { text: '放置游戏的数学（第一部分）', link: '/games/math-of-idle-games-p1' },
             { text: '放置游戏的数学（第二部分）', link: '/games/math-of-idle-games-p2' },
             { text: '放置游戏的数学（第三部分）', link: '/games/math-of-idle-games-p3' },
-            { text: '增量游戏数值开发与 Godot 实现', link: '/games/incremental-math-godot-guide' }
+            { text: '增量游戏数值开发与 Godot 实现', link: '/games/incremental-math-godot-guide' },
+            { text: '枪火重生 Build 机制深度调研', link: '/games/gunfire-rebirth-build-mechanics' },
+            { text: 'Roboquest Build 机制深度调研', link: '/games/roboquest-build-mechanics' }
           ]
         }
       ],
