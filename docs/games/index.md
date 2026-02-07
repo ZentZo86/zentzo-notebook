@@ -19,3 +19,5 @@
 ## 竞品分析
 
 - [WorldBox - God Simulator: 深度调研](./worldbox-deep-research)
+- [《枪火重生》Build 机制深度调研](./gunfire-rebirth-build-mechanics)
+- [《Roboquest》（酷炫机器人）Build 机制深度调研](./roboquest-build-mechanics)
